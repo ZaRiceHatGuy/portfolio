@@ -14,7 +14,6 @@ const skills = [
   { name: 'Vercel', icon: '/icons/Vercel.svg' },
   { name: 'Firebase', icon: '/icons/Firebase.svg' },
   { name: 'Supabase', icon: '/icons/Supabase.svg' },
-  { name: 'VS Code', icon: '/icons/VSCode.svg' },
   { name: 'Git', icon: '/icons/Git.svg' },
 ];
 
