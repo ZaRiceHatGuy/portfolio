@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0d0d0f;
+  --bg2: #141417;
+  --bg3: #1c1c21;
+  --accent: #2f7fff;
+  --accent2: #f5c842;
+  --text: #f0eff5;
+  --muted: #8a8898;
+  --border: rgba(255,255,255,0.08);
+  --card: #17171c;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  overflow-x: hidden;
+}
+
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text); }
+
+.hero-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  border: 1px solid rgba(245,200,66,0.35);
+  padding: 0.3rem 0.9rem;
+  border-radius: 2rem;
+  margin-bottom: 1.8rem;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 1rem;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 200, 66, 0.4), rgba(245, 200, 66, 0.4), transparent);
+  margin: 0 auto;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 0.7rem 1.6rem;
+  border-radius: 0.4rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+}
+.btn-primary:hover { background: #1a6fef; }
+
+.btn-outline {
+  display: inline-block;
+  padding: 0.7rem 1.6rem;
+  border-radius: 0.4rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-outline:hover { border-color: var(--accent2); color: var(--accent2); }
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.4rem 1.2rem;
+}
+
+.project-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.6rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.project-card:hover {
+  border-color: rgba(47,127,255,0.4);
+  transform: translateY(-3px);
+}
+
+.tag {
+  font-size: 0.68rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 0.3rem;
+  background: rgba(47,127,255,0.1);
+  color: #6aaeff;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(47,127,255,0.2);
+}
+
+.skill-group {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.4rem;
+}
+
+.skill-chip {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--bg3);
+  border-radius: 0.3rem;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.contact-link:hover { border-color: var(--accent); color: var(--accent2); }
+
+.hero-scroll {
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero-scroll::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--muted);
+}
