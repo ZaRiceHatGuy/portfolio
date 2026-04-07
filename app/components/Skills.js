@@ -10,7 +10,7 @@ const skills = [
   { name: 'Java', icon: '/icons/Java.svg' },
   { name: 'PostgreSQL', icon: '/icons/PostgreSQL.svg' },
   { name: 'React', icon: '/icons/React.svg' },
-  { name: 'Next.js', icon: '/icons/Next.js.svg' },
+  { name: 'Next.js', icon: '/icons/NextJS.svg' },
   { name: 'Vercel', icon: '/icons/Vercel.svg' },
   { name: 'Firebase', icon: '/icons/Firebase.svg' },
   { name: 'Supabase', icon: '/icons/Supabase.svg' },

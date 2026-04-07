@@ -155,7 +155,7 @@ export default function Hero() {
             style={{ background: 'var(--card)' }}
           >
             <img 
-              src="/Media/profile.jpg"
+              src="/media/profile.jpg"
               alt="David Nguyen"
               className="w-full h-full object-cover"
             />
