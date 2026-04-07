@@ -35,7 +35,7 @@ const projects = [
     github: 'https://github.com/ZaRiceHatGuy/PingPongPyGame.git',
     live: null,
     year: '2026',
-    image: '/images/PingPongPygame.png'
+    image: '/images/PingPongPyGame.png'
   },
 ];
 
