@@ -8,7 +8,7 @@ const projects = [
     github: 'https://github.com/Haedyn06/Project-HomeFull.git',
     live: 'https://project-homefull.vercel.app/',
     year: '2026',
-    image: '/media/HomeFull.png'
+    image: '/images/HomeFull.png'
   },
   {
     name: 'Village Rental',
@@ -17,7 +17,7 @@ const projects = [
     github: 'https://github.com/ZaRiceHatGuy/VillageRental.git',
     live: null,
     year: '2025',
-    video: '/media/VillageRental.mp4'
+    video: '/videos/VillageRental.mp4'
   },
   {
     name: 'Quadratic Solver',
@@ -26,7 +26,7 @@ const projects = [
     github: 'https://github.com/ZaRiceHatGuy/Quadratic-Calculator.git',
     live: null,
     year: '2022-2026',
-    image: '/media/QuadraticCalculator.png'
+    image: '/images/QuadraticCalculator.png'
   },
   {
     name: 'PingPongPyGame',
@@ -35,7 +35,7 @@ const projects = [
     github: 'https://github.com/ZaRiceHatGuy/PingPongPyGame.git',
     live: null,
     year: '2026',
-    image: '/media/PingPongPygame.png'
+    image: '/images/PingPongPygame.png'
   },
 ];
 
