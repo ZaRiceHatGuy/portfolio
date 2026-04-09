@@ -161,7 +161,7 @@ export default function Hero() {
             {/* Image */}
             <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-yellow-500/50 transition-all duration-500">
               <img 
-                src="/images/Profile.jpg"
+                src="/images/Profile.png"
                 alt="David Nguyen"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
