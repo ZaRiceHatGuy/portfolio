@@ -7,7 +7,7 @@ export default function About() {
       <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
         <div className="space-y-3">
           <p className="text-[var(--muted)] leading-relaxed text-sm">
-            Hello, I&apos;m <strong className="text-[var(--text)] font-medium">Thái Dương (David) Nguyễn</strong>, a Software Development student at SAIT.
+            Hello, I&apos;m <strong className="text-[var(--text)] font-medium">Thai Duong (David) Nguyen</strong>, a Software Development student at SAIT.
             I began programming with Python in high school, and Lua for making Roblox games,
             while also exploring embedded systems with Arduino and C++.
           </p>

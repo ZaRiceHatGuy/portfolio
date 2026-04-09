@@ -117,11 +117,11 @@ export default function Hero() {
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
                 <Phone size={16} className="text-[var(--accent)] shrink-0" />
-                <a href="tel:+14038272659" className="hover:text-[var(--accent)] transition-colors">+1 (403) 827-2659</a>
+                <span>+1 (403) 827-2659</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
                 <Mail size={16} className="text-[var(--accent)] shrink-0" />
-                <a href="mailto:davidnguyen107206@gmail.com" className="hover:text-[var(--accent)] transition-colors break-all">davidnguyen107206@gmail.com</a>
+                <span>davidnguyen107206@gmail.com</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
                 <Briefcase size={16} className="text-[var(--accent)] shrink-0" />
@@ -140,25 +140,32 @@ export default function Hero() {
                 <Download size={14} />
               </a>
               <a href="https://github.com/ZaRiceHatGuy" target="_blank" rel="noopener noreferrer" title="GitHub"
-                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--border)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-[var(--card)]">
-                <GitHubIcon className="text-[var(--muted)] group-hover:text-[#f5c842] transition-colors duration-300" />
+                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
+                <GitHubIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
               </a>
               <a href="https://www.linkedin.com/in/david-thai-duong-nguyen-063152325/" target="_blank" rel="noopener noreferrer" title="LinkedIn"
-                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--border)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-[var(--card)]">
-                <LinkedInIcon className="text-[var(--muted)] group-hover:text-[#f5c842] transition-colors duration-300" />
+                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
+                <LinkedInIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
               </a>
             </div>
           </div>
 
-          {/* Photo — smaller on mobile, centered */}
-          <div className="w-[160px] h-[160px] md:w-[320px] md:h-[320px] rounded-full flex-shrink-0 mx-auto md:mx-0 border-2 border-[var(--border)] overflow-hidden"
-            style={{ background: 'var(--card)' }}
-          >
-            <img 
-              src="/images/Profile.jpg"
-              alt="David Nguyen"
-              className="w-full h-full object-cover"
-            />
+          {/* Simplified but polished version */}
+          <div className="w-[160px] h-[160px] md:w-[320px] md:h-[320px] rounded-full flex-shrink-0 mx-auto md:mx-0 relative group">
+            {/* Single smooth rotating gradient */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-yellow-500 to-blue-500 animate-spin-slow opacity-30 group-hover:opacity-60 transition-all duration-500 blur-lg"></div>
+            
+            {/* Glass background with shadow */}
+            <div className="absolute inset-[3px] rounded-full bg-[var(--card)]/80 backdrop-blur-sm shadow-[0_0_20px_rgba(47,127,255,0.15)] group-hover:shadow-[0_0_30px_rgba(245,200,66,0.25)] transition-all duration-500"></div>
+            
+            {/* Image */}
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-yellow-500/50 transition-all duration-500">
+              <img 
+                src="/images/Profile.jpg"
+                alt="David Nguyen"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
           </div>
         </div>
       </div>
