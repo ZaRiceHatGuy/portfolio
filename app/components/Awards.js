@@ -18,8 +18,9 @@ export default function Awards() {
         {achievements.map((item, idx) => (
           <div key={idx} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3">
             <div className="font-['Syne'] font-medium text-[var(--text)] text-sm mb-1">{item.name}</div>
-            <div className="font-['Syne'] text-xs text-[var(--muted)]">
-              {item.issuer}{item.year && ` • ${item.year}`}
+            <div className="font-['Syne'] text-xs">
+              <span className="text-[#f5c842]">{item.issuer}</span>
+              {item.year && <span className="text-[var(--muted)]"> <br />{item.year}</span>}
             </div>
           </div>
         ))}
