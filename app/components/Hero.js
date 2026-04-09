@@ -143,7 +143,7 @@ export default function Hero() {
                 className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
                 <GitHubIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
               </a>
-              <a href="https://www.linkedin.com/in/david-thai-duong-nguyen-063152325/" target="_blank" rel="noopener noreferrer" title="LinkedIn"
+              <a href="http://www.linkedin.com/in/davidntd" target="_blank" rel="noopener noreferrer" title="LinkedIn"
                 className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
                 <LinkedInIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
               </a>

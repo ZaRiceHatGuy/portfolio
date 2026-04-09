@@ -53,7 +53,7 @@ export default function Contact() {
             {[
               { icon: <FiPhone size={20} className="text-[#f5c842] shrink-0" />, href: 'tel:+14038272659', label: '+1 (403) 827-2659' },
               { icon: <FiMail size={20} className="text-[#f5c842] shrink-0" />, href: 'mailto:davidnguyen107206@gmail.com', label: 'davidnguyen107206@gmail.com' },
-              { icon: <FiLinkedin size={20} className="text-[#f5c842] shrink-0" />, href: 'https://www.linkedin.com/in/david-thai-duong-nguyen-063152325/', label: 'LinkedIn' },
+              { icon: <FiLinkedin size={20} className="text-[#f5c842] shrink-0" />, href: 'http://www.linkedin.com/in/davidntd', label: 'LinkedIn' },
               { icon: <FiGithub size={20} className="text-[#f5c842] shrink-0" />, href: 'https://github.com/ZaRiceHatGuy', label: 'GitHub' },
             ].map(({ icon, href, label }) => (
               <div key={label} className="flex items-center gap-3 min-w-0">
