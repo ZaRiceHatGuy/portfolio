@@ -1,19 +1,76 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
+import DecryptText from './DecryptText';
+import DecryptReveal from './DecryptReveal';
+
+function SectionNavLink({ section, activeSection, onNavigate, variant = 'desktop' }) {
+  const isActive = activeSection === section;
+  const colorClass = isActive
+    ? '!text-[var(--accent)]'
+    : 'text-[var(--muted)] hover:!text-[var(--accent2)]';
+
+  const layoutClass =
+    variant === 'desktop'
+      ? 'group relative font-medium text-base py-5 inline-flex items-center justify-center tracking-wide no-underline cursor-pointer'
+      : 'group relative font-medium px-[6vw] text-lg tracking-wide no-underline cursor-pointer block';
+
+  return (
+    <a
+      href={`#${section}`}
+      onClick={(e) => onNavigate(e, section)}
+      className={`${layoutClass} ${colorClass}`}
+    >
+      <span className="relative inline-block uppercase">
+        <DecryptText text={section} animateOnMount delay={section === 'home' ? 200 : section === 'about' ? 300 : section === 'projects' ? 400 : 500} />
+        <span
+          className={`absolute left-1/2 -translate-x-1/2 bottom-[-4px] h-[2px] transition-all duration-300 ease-out ${
+            isActive
+              ? 'w-full bg-[var(--accent)]'
+              : 'w-0 bg-[var(--accent2)] group-hover:w-full'
+          }`}
+        />
+      </span>
+    </a>
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const navRef = useRef(null);
   const links = ['home', 'about', 'projects', 'contact'];
 
   useEffect(() => {
+    const syncNavbarHeight = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty(
+          '--navbar-height',
+          `${navRef.current.offsetHeight}px`
+        );
+      }
+    };
+
+    syncNavbarHeight();
+    window.addEventListener('resize', syncNavbarHeight);
+    return () => window.removeEventListener('resize', syncNavbarHeight);
+  }, [open]);
+
+  useEffect(() => {
+    const getNavbarHeight = () => {
+      if (navRef.current?.offsetHeight) {
+        return navRef.current.offsetHeight;
+      }
+      const cssHeight = Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--navbar-height')
+      );
+      return cssHeight || 72;
+    };
+
     const handleScroll = () => {
-      const navbarHeight = 80;
-      const scrollPosition = window.scrollY + navbarHeight + 50; // Add offset for better detection
+      const navbarHeight = getNavbarHeight();
+      const scrollPosition = window.scrollY + navbarHeight + 50;
       
-      // Find which section is currently in view
       let currentSection = 'home';
       let minDistance = Infinity;
       
@@ -23,13 +80,11 @@ export default function Navbar() {
           const offsetTop = element.offsetTop;
           const offsetBottom = offsetTop + element.offsetHeight;
           
-          // Check if scroll position is within this section
           if (scrollPosition >= offsetTop && scrollPosition <= offsetBottom) {
             currentSection = sectionId;
             break;
           }
           
-          // Find closest section if between sections
           const distanceToTop = Math.abs(scrollPosition - offsetTop);
           if (distanceToTop < minDistance) {
             minDistance = distanceToTop;
@@ -41,10 +96,8 @@ export default function Navbar() {
       setActiveSection(currentSection);
     };
     
-    // Initial check
     handleScroll();
     
-    // Add scroll event listener with throttling for performance
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
@@ -57,62 +110,65 @@ export default function Navbar() {
     };
     
     window.addEventListener('scroll', onScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, [links]);
 
   const handleClick = (e, sectionId) => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
-      const navbarHeight = 80;
-      const elementPosition = element.offsetTop - navbarHeight;
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setOpen(false);
     }
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[6vw] py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]">
-      <a 
-        href="#home" 
+    <nav
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[6vw] py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
+    >
+      {/* Logo */}
+      <a
+        href="#home"
         onClick={(e) => handleClick(e, 'home')}
-        className="font-['Syne'] font-extrabold text-lg text-[var(--text)] no-underline tracking-tight cursor-pointer py-5"
+        className="font-medium text-xl text-[var(--text)] no-underline tracking-tight cursor-pointer py-5"
       >
-        DavidNTD<span className="text-[var(--accent)]"></span>
+        <DecryptText text="DavidNTD" animateOnMount delay={100} />
       </a>
 
       {/* Desktop nav */}
-      <ul className="hidden md:flex gap-0 list-none h-full">
+      <ul className="hidden md:flex items-center gap-12 list-none h-full">
         {links.map(s => (
-          <li key={s} className="h-full flex-1 min-w-[100px]">
-            <a 
-              href={`#${s}`} 
-              onClick={(e) => handleClick(e, s)}
-              style={{ transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
-              className={`nav-link capitalize text-sm md:text-base px-6 py-5 inline-flex items-center justify-center w-full h-full ${
-                activeSection === s 
-                  ? '!text-blue-500 bg-blue-500/20 border-b-2 border-blue-500' 
-                  : 'text-[var(--muted)] hover:!text-[#f5c842] hover:bg-yellow-500/20 hover:border-b-2 hover:border-[#f5c842]'
-              }`}
-            >
-              {s}
-            </a>
+          <li key={s} className="h-full">
+            <SectionNavLink
+              section={s}
+              activeSection={activeSection}
+              onNavigate={handleClick}
+              variant="desktop"
+            />
           </li>
         ))}
-        <li className="h-full flex-1 min-w-[100px]">
-          <a 
-            href="/Resume/David Nguyen - Resume.pdf" 
-            target="_blank" 
-            style={{ transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}
-            className="nav-link text-sm md:text-base px-6 py-5 inline-flex items-center justify-center w-full h-full text-[var(--muted)] hover:!text-[#f5c842] hover:bg-yellow-500/20 hover:border-b-2 hover:border-[#f5c842]"
+
+        {/* Resume — special CTA button */}
+        <li className="flex items-center">
+          <a
+            href="/Resume/David Nguyen - Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="navbar-resume"
           >
-            resume
+            <DecryptReveal animateOnMount delay={550}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="w-4 h-4 shrink-0"
+              >
+                <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+                <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+              </svg>
+            </DecryptReveal>
+            <DecryptText text="Resume" animateOnMount delay={600} />
           </a>
         </li>
       </ul>
@@ -130,31 +186,40 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,13,15,0.97)] border-b border-[var(--border)] flex flex-col py-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,13,15,0.97)] border-b border-[var(--border)] flex flex-col gap-4 py-4">
           {links.map(s => (
-            <a 
-              key={s} 
-              href={`#${s}`} 
-              onClick={(e) => handleClick(e, s)}
-              style={{ transition: 'all 0.3s ease' }}
-              className={`nav-link px-[6vw] py-3 text-base md:text-lg capitalize ${
-                activeSection === s 
-                  ? '!text-blue-500 bg-blue-500/20 border-l-4 border-blue-500' 
-                  : 'text-[var(--muted)] hover:!text-[#f5c842] hover:bg-yellow-500/20'
-              }`}
-            >
-              {s}
-            </a>
+            <SectionNavLink
+              key={s}
+              section={s}
+              activeSection={activeSection}
+              onNavigate={handleClick}
+              variant="mobile"
+            />
           ))}
-          <a 
-            href="/Resume/David Nguyen - Resume.pdf" 
-            target="_blank" 
-            style={{ transition: 'all 0.3s ease' }}
-            className="nav-link px-[6vw] py-3 text-base md:text-lg text-[var(--muted)] hover:!text-[#f5c842] hover:bg-yellow-500/20"
-            onClick={() => setOpen(false)}
-          >
-            resume
-          </a>
+
+          {/* Mobile Resume CTA */}
+          <div className="navbar-mobile-resume px-[6vw] pb-1">
+            <a
+              href="/Resume/David Nguyen - Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="navbar-resume"
+            >
+              <DecryptReveal animateOnMount delay={550}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  className="w-4 h-4 shrink-0"
+                >
+                  <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
+                  <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
+                </svg>
+              </DecryptReveal>
+              <DecryptText text="Resume" animateOnMount delay={600} />
+            </a>
+          </div>
         </div>
       )}
     </nav>

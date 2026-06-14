@@ -1,8 +1,9 @@
 "use client";
 import React from 'react';
-import HeroCanvas from './HeroCanvas';
 import { useState, useEffect } from 'react';
 import { MapPin, Mail, Phone, Briefcase, Download, FileText } from 'lucide-react';
+import DecryptText from './DecryptText';
+import DecryptReveal from './DecryptReveal';
 
 const GitHubIcon = ({ className }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -92,40 +93,50 @@ export default function Hero() {
   };
 
   return (
-    <div id="home" className="min-h-screen flex flex-col justify-center px-6 md:px-[6vw] pt-28 pb-16 relative overflow-hidden">
-      <HeroCanvas />
-      <div className="max-w-[1100px] mx-auto w-full relative z-10">
+    <div id="home" className="min-h-screen flex flex-col justify-center px-6 md:px-[6vw] pt-28 pb-16 relative">
+      <div className="max-w-[1100px] mx-auto w-full">
         <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start gap-8 md:gap-12">
 
           {/* Text content */}
           <div className="flex-1">
-            <h1 className="text-[clamp(2.2rem,8vw,3.8rem)] font-bold leading-[1.3] tracking-tight text-[var(--text)] mb-4 whitespace-pre-line">
+            <h1 className="text-[clamp(2.2rem,8vw,3.8rem)] leading-[1.3] tracking-tight text-[var(--text)] mb-4 whitespace-pre-line">
               {displayName.split('\n').map((line, i) => (
                 <React.Fragment key={i}>{line}{i < displayName.split('\n').length - 1 && <br />}</React.Fragment>
               ))}
             </h1>
 
-            <p className="text-sm text-[var(--muted)] max-w-[480px] mb-5 leading-relaxed">
-              SAIT Software Development Student, specializing in front-end development and database systems.
-              Passionate and interested in learning about embedded systems, robotics, and artificial intelligence.
-            </p>
+            <DecryptText
+              as="p"
+              animateOnMount
+              delay={1200}
+              text="SAIT Software Development Student, specializing in front-end development and database systems. Passionate and interested in learning about embedded systems, robotics, and artificial intelligence."
+              className="text-sm text-[var(--muted)] max-w-[480px] mb-5 leading-relaxed"
+            />
 
             <div className="flex flex-col gap-2 mb-6">
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <MapPin size={16} className="text-[var(--accent)] shrink-0" />
-                <span>Calgary, AB, Canada</span>
+                <DecryptReveal animateOnMount delay={1400}>
+                  <MapPin size={16} className="text-[var(--accent)]" />
+                </DecryptReveal>
+                <DecryptText text="Calgary, AB, Canada" animateOnMount delay={1400} />
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <Phone size={16} className="text-[var(--accent)] shrink-0" />
-                <span>+1 (403) 827-2659</span>
+                <DecryptReveal animateOnMount delay={1500}>
+                  <Phone size={16} className="text-[var(--accent)]" />
+                </DecryptReveal>
+                <DecryptText text="+1 (403) 827-2659" animateOnMount delay={1500} />
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <Mail size={16} className="text-[var(--accent)] shrink-0" />
-                <span>davidnguyen107206@gmail.com</span>
+                <DecryptReveal animateOnMount delay={1600}>
+                  <Mail size={16} className="text-[var(--accent)]" />
+                </DecryptReveal>
+                <DecryptText text="davidnguyen107206@gmail.com" animateOnMount delay={1600} />
               </div>
               <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <Briefcase size={16} className="text-[var(--accent)] shrink-0" />
-                <span>Open to co-op/internship opportunities</span>
+                <DecryptReveal animateOnMount delay={1700}>
+                  <Briefcase size={16} className="text-[var(--accent)]" />
+                </DecryptReveal>
+                <DecryptText text="Open to co-op/internship opportunities" animateOnMount delay={1700} />
               </div>
             </div>
 
@@ -133,33 +144,46 @@ export default function Hero() {
               <a
                 href="/Resume/David Nguyen - Resume.pdf"
                 target="_blank"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent)] bg-transparent text-[var(--accent)] text-sm font-medium transition-all duration-300 hover:border-[#f5c842] hover:text-[#f5c842] hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent)] bg-transparent text-[var(--accent)] text-sm transition-all duration-300 hover:border-[var(--accent2)] hover:text-[var(--accent2)] hover:scale-[1.02]"
               >
-                <FileText size={16} />
-                <span>Resume</span>
-                <Download size={14} />
+                <DecryptReveal animateOnMount delay={1750}>
+                  <FileText size={16} />
+                </DecryptReveal>
+                <DecryptText text="Resume" animateOnMount delay={1800} />
+                <DecryptReveal animateOnMount delay={1850}>
+                  <Download size={14} />
+                </DecryptReveal>
               </a>
-              <a href="https://github.com/ZaRiceHatGuy" target="_blank" rel="noopener noreferrer" title="GitHub"
-                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
-                <GitHubIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
-              </a>
-              <a href="http://www.linkedin.com/in/davidntd" target="_blank" rel="noopener noreferrer" title="LinkedIn"
-                className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[#f5c842] hover:scale-[1.06] bg-transparent">
-                <LinkedInIcon className="text-[var(--accent)] group-hover:text-[#f5c842] transition-colors duration-300" />
-              </a>
+              <DecryptReveal animateOnMount delay={1900}>
+                <a href="https://github.com/ZaRiceHatGuy" target="_blank" rel="noopener noreferrer" title="GitHub"
+                  className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[var(--accent2)] hover:scale-[1.06] bg-transparent">
+                  <GitHubIcon className="text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300" />
+                </a>
+              </DecryptReveal>
+              <DecryptReveal animateOnMount delay={2000}>
+                <a href="http://www.linkedin.com/in/davidntd" target="_blank" rel="noopener noreferrer" title="LinkedIn"
+                  className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[var(--accent2)] hover:scale-[1.06] bg-transparent">
+                  <LinkedInIcon className="text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300" />
+                </a>
+              </DecryptReveal>
             </div>
           </div>
 
           {/* Simplified but polished version */}
-          <div className="w-[160px] h-[160px] md:w-[320px] md:h-[320px] rounded-full flex-shrink-0 mx-auto md:mx-0 relative group">
+          <DecryptReveal
+            animateOnMount
+            delay={900}
+            className="w-[160px] h-[160px] md:w-[320px] md:h-[320px] rounded-full flex-shrink-0 mx-auto md:mx-0 relative group"
+          >
+          <div className="w-full h-full relative group">
             {/* Single smooth rotating gradient */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-yellow-500 to-blue-500 animate-spin-slow opacity-30 group-hover:opacity-60 transition-all duration-500 blur-lg"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent2)] to-[var(--accent)] animate-spin-slow opacity-30 group-hover:opacity-60 transition-all duration-500 blur-lg"></div>
             
             {/* Glass background with shadow */}
-            <div className="absolute inset-[3px] rounded-full bg-[var(--card)]/80 backdrop-blur-sm shadow-[0_0_20px_rgba(47,127,255,0.15)] group-hover:shadow-[0_0_30px_rgba(245,200,66,0.25)] transition-all duration-500"></div>
+            <div className="absolute inset-[3px] rounded-full bg-[var(--card)]/80 backdrop-blur-sm shadow-[0_0_20px_rgba(var(--accent-rgb),0.15)] group-hover:shadow-[0_0_30px_rgba(var(--accent2-rgb),0.25)] transition-all duration-500"></div>
             
             {/* Image */}
-            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-yellow-500/50 transition-all duration-500">
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-[var(--accent2)]/50 transition-all duration-500">
               <img 
                 src="/images/Profile.png"
                 alt="David Nguyen"
@@ -167,6 +191,7 @@ export default function Hero() {
               />
             </div>
           </div>
+          </DecryptReveal>
         </div>
       </div>
     </div>

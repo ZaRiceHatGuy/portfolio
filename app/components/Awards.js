@@ -1,3 +1,5 @@
+import DecryptText from './DecryptText';
+
 export default function Awards() {
   const achievements = [
     { name: 'Team Award for Leadership, Resilience, and Community-Building', issuer: 'Centennial High School Band Award', year: '2024' },
@@ -8,19 +10,20 @@ export default function Awards() {
 
   return (
     <div className="w-full">
-      {/* Add mt-8 or adjust this value to push heading down */}
-      <div className="h-[clamp(2rem,4vw,3rem)] mb-6 flex items-center mt-9.5">
-        <h2 className="font-['Syne'] text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-[1.1] whitespace-nowrap">
-          Awards & Certifications
-        </h2>
-      </div>
+      <DecryptText
+        text="Awards & Certifications"
+        as="h2"
+        className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1] mb-4"
+      />
       <div className="flex flex-col gap-3">
         {achievements.map((item, idx) => (
           <div key={idx} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3">
-            <div className="font-['Syne'] font-medium text-[var(--text)] text-sm mb-1">{item.name}</div>
-            <div className="font-['Syne'] text-xs">
-              <span className="text-[#f5c842]">{item.issuer}</span>
-              {item.year && <span className="text-[var(--muted)]"> <br />{item.year}</span>}
+            <DecryptText text={item.name} className="text-[var(--text)] text-sm mb-1 block" />
+            <div className="text-xs">
+              <DecryptText text={item.issuer} className="text-[var(--accent2)]" />
+              {item.year && (
+                <DecryptText text={item.year} className="text-[var(--muted)] block" />
+              )}
             </div>
           </div>
         ))}

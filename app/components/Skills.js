@@ -1,39 +1,66 @@
-// Skills.js
 'use client';
 
-const skills = [
-  { name: 'HTML5', icon: '/icons/HTML.svg' },
-  { name: 'CSS3', icon: '/icons/CSS.svg' },
-  { name: 'JavaScript', icon: '/icons/JavaScript.svg' },
-  { name: 'Python', icon: '/icons/Python.svg' },
-  { name: 'C#', icon: '/icons/CSharp.svg' },
-  { name: 'Java', icon: '/icons/Java.svg' },
-  { name: 'PostgreSQL', icon: '/icons/PostgreSQL.svg' },
-  { name: 'React', icon: '/icons/React.svg' },
-  { name: 'Next.js', icon: '/icons/NextJS.svg' },
-  { name: 'Vercel', icon: '/icons/Vercel.svg' },
-  { name: 'Firebase', icon: '/icons/Firebase.svg' },
-  { name: 'Supabase', icon: '/icons/Supabase.svg' },
-  { name: 'Git', icon: '/icons/Git.svg' },
+import { Fragment } from 'react';
+import DecryptText from './DecryptText';
+import DecryptReveal from './DecryptReveal';
+
+const skillGroups = [
+  {
+    label: 'Languages & data',
+    skills: [
+      { name: 'Python', icon: '/icons/Python.svg' },
+      { name: 'C#', icon: '/icons/CSharp.svg' },
+      { name: 'Java', icon: '/icons/Java.svg' },
+      { name: 'HTML', icon: '/icons/HTML.svg' },
+      { name: 'CSS', icon: '/icons/CSS.svg' },
+      { name: 'JavaScript', icon: '/icons/JavaScript.svg' },
+      { name: 'TypeScript', icon: '/icons/TypeScript.svg' },
+      { name: 'PostgreSQL', icon: '/icons/PostgreSQL.svg' },
+    ],
+  },
+  {
+    label: 'Frameworks',
+    skills: [
+      { name: 'React', icon: '/icons/React.svg' },
+      { name: 'Next.js', icon: '/icons/NextJS.svg' },
+    ],
+  },
+  {
+    label: 'Tools & platforms',
+    skills: [
+      { name: 'Git', icon: '/icons/Git.svg' },
+      { name: 'Vercel', icon: '/icons/Vercel.svg' },
+      { name: 'Framer', icon: '/icons/Framer.svg' },
+      { name: 'Supabase', icon: '/icons/Supabase.svg' },
+    ],
+  },
 ];
 
-export default function SkillsBlock() {
-  const columnsPerRow = 7;
-  const remainingItems = columnsPerRow - (skills.length % columnsPerRow);
-  const placeholders = remainingItems === columnsPerRow ? 0 : remainingItems;
+const GRID_CLASS = 'grid grid-cols-4 sm:grid-cols-8 gap-2';
 
+export default function SkillsBlock() {
   return (
-    <div className="w-full flex flex-col">
-      <div className="h-[clamp(2rem,4vw,3rem)] mb-6 flex items-center">
-        <h2 className="font-['Syne'] text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-[1.1]">
-          Tech Stack
-        </h2>
-      </div>
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-4 md:p-5">
-        <div className="grid grid-cols-7 gap-2 md:gap-2.5 justify-items-center">
-          {skills.map((s) => <SkillBadge key={s.name} skill={s} />)}
-          {[...Array(placeholders)].map((_, i) => (
-            <div key={`placeholder-${i}`} className="w-full aspect-square max-w-[50px]" />
+    <div className="w-full">
+      <DecryptText
+        text="Tech Stack"
+        as="h2"
+        className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1] mb-4"
+      />
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
+        <div className={GRID_CLASS}>
+          {skillGroups.map((group, groupIdx) => (
+            <Fragment key={group.label}>
+              <DecryptText
+                text={group.label}
+                as="p"
+                className={`col-span-full w-full text-left text-[0.65rem] text-[var(--muted)] tracking-wide uppercase ${
+                  groupIdx > 0 ? 'mt-2 pt-4 border-t border-[var(--border)]' : ''
+                }`}
+              />
+              {group.skills.map((s, skillIdx) => (
+                <SkillBadge key={s.name} skill={s} revealDelay={skillIdx * 40} />
+              ))}
+            </Fragment>
           ))}
         </div>
       </div>
@@ -41,13 +68,13 @@ export default function SkillsBlock() {
   );
 }
 
-function SkillBadge({ skill }) {
+function SkillBadge({ skill, revealDelay = 0 }) {
   return (
-    <div className="group relative w-full aspect-square max-w-[50px] rounded-xl bg-[var(--bg3)] border border-[var(--border)] flex items-center justify-center cursor-default transition-all duration-200 hover:border-[#8b6914] hover:bg-[rgba(139,105,20,0.08)] hover:-translate-y-1">
+    <DecryptReveal delay={revealDelay} className="group relative justify-self-center w-[50px] h-[50px] rounded-xl bg-[var(--bg3)] border border-[var(--border)] cursor-default transition-all duration-200 hover:border-[var(--accent2)] hover:bg-[rgba(var(--accent2-rgb),0.08)] hover:-translate-y-1">
       <img src={skill.icon} alt={skill.name} width={26} height={26} className="object-contain" />
       <div className="absolute bottom-[calc(100%+8px)] left-1/2 -translate-x-1/2 translate-y-1 bg-[#1c1c21] text-[var(--text)] text-[0.68rem] tracking-wide py-1 px-2 rounded-[0.35rem] whitespace-nowrap border border-[var(--border)] opacity-0 transition-all duration-200 pointer-events-none z-10 group-hover:opacity-100 group-hover:translate-y-0">
-        {skill.name}
+        <DecryptText text={skill.name} />
       </div>
-    </div>
+    </DecryptReveal>
   );
 }

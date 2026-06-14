@@ -5,51 +5,55 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import SkillsBlock from './components/Skills';
 import Education from './components/Education';
+import Experience from './components/Experience';
 import Awards from './components/Awards';
+import HeroCanvas from './components/HeroCanvas';
+import Footer from './components/Footer';
 
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <Hero />
-      <div className="divider" />
+      <div className="fixed inset-0 z-0 pointer-events-none" aria-hidden="true">
+        <HeroCanvas />
+      </div>
 
-      {/* About section — 2 cols on md+, single col on mobile */}
-      <section id="about" className="px-[6vw] py-16 md:py-24">
-        <div className="max-w-[1100px] mx-auto w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
-            {/* Left Column - removed negative margin */}
-            <div className="flex flex-col gap-12 md:gap-16">
+      <Navbar />
+
+      <main className="relative z-10">
+        <Hero />
+
+        <section id="about" className="px-[6vw] pt-16 pb-6 md:pt-24 md:pb-8">
+          <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
               <About />
-              <SkillsBlock />
-            </div>
-            
-            {/* Right Column */}
-            <div className="flex flex-col gap-12 md:gap-16">
               <Education />
+              <Experience />
               <Awards />
             </div>
+            <SkillsBlock />
           </div>
-        </div>
-      </section>
+        </section>
 
-      <div className="divider" />
-      <section id="projects" className="px-[6vw] py-16 md:py-24">
-        <div className="max-w-[1100px] mx-auto">
-          <Projects />
-        </div>
-      </section>
+        <section id="projects" className="px-[6vw] pt-6 pb-16 md:pt-8 md:pb-24">
+          <div className="max-w-[1100px] mx-auto">
+            <Projects />
+          </div>
+        </section>
 
-      <div className="divider" />
-      <section id="contact" className="px-[6vw] py-16 md:py-24">
-        <div className="max-w-[1100px] mx-auto">
-          <Contact />
-        </div>
-      </section>
+        <div
+          id="contact"
+          className="bg-[var(--bg)] min-h-[calc(100vh-var(--navbar-height))] flex flex-col"
+        >
+          <div className="fade-border-top shrink-0" />
+          <section className="flex-1 px-[6vw] py-12 md:py-16 flex flex-col min-h-0">
+            <div className="max-w-[1100px] mx-auto w-full flex-1 flex flex-col justify-center min-h-0">
+              <Contact />
+            </div>
+          </section>
 
-      <footer className="border-t border-[var(--border)] text-center py-8 px-[6vw] text-[var(--muted)] text-xs tracking-wide">
-        © 2026 Thái Dương (David) Nguyễn. Designed & built with care.
-      </footer>
+          <Footer />
+        </div>
+      </main>
     </>
   );
 }

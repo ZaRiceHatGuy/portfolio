@@ -1,11 +1,13 @@
+import DecryptText from './DecryptText';
+
 export default function Education() {
   const education = [
     {
       degree: 'Software Development Diploma',
       school: 'SAIT (Southern Alberta Institute of Technology)',
       year: '2024 - 2026',
-      gpa: '3.7',
-      coursework: ['Web Development', 'Object-Oriented Programming', 'Database', 'Cloud Computing', 'Software Analysis', 'Security', 'Testing and Deployment']
+      gpa: '3.8',
+      coursework: ['Object-Oriented Programming', 'Web Development','Mobile Application Development', 'Database', 'Cloud Computing', 'Software Analysis', 'Software Security', 'Software Testing and Deployment']
     },
     {
       degree: 'Integrated Artificial Intelligence Post-Diploma Certificate',
@@ -18,25 +20,31 @@ export default function Education() {
 
   return (
     <div>
-      <h2 className="font-['Syne'] text-[clamp(2rem,4vw,3rem)] font-bold tracking-tight leading-[1.1] mb-6">
-        Education
-      </h2>
+      <DecryptText
+        text="Education"
+        as="h2"
+        className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1] mb-4"
+      />
       <div className="flex flex-col gap-4">
         {education.map((item, idx) => (
           <div key={idx} className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
-            <div className="font-['Syne'] font-semibold text-[var(--text)] text-sm mb-1">{item.degree}</div>
-            <div className="font-['Syne'] text-sm text-[var(--accent2)] mb-1">{item.school}</div>
-            <div className={`font-['Syne'] text-xs text-[var(--muted)] ${item.gpa || item.coursework.length ? 'mb-3' : ''}`}>{item.year}</div>
+            <DecryptText text={item.degree} className="text-[var(--text)] text-sm mb-1 block" />
+            <DecryptText text={item.school} className="text-sm text-[var(--accent2)] mb-1 block" />
+            <DecryptText
+              text={item.year}
+              className={`text-xs text-[var(--muted)] block ${item.gpa || item.coursework.length ? 'mb-3' : ''}`}
+            />
             {item.gpa && (
-              <div className="font-['Syne'] text-xs text-[var(--text)] mb-2 pt-1 border-t border-[var(--border)]">
-                <strong>GPA:</strong> {item.gpa}
-              </div>
+              <DecryptText
+                text={`GPA: ${item.gpa}`}
+                className="text-xs text-[var(--text)] mb-2 pt-1 border-t border-[var(--border)] block"
+              />
             )}
             {item.coursework.length > 0 && (
-              <div className="font-['Syne'] text-xs text-[var(--muted)] mt-1 leading-relaxed">
-                <strong className="text-[var(--text)]">Relevant Coursework:</strong>{' '}
-                {item.coursework.join(', ')}
-              </div>
+              <DecryptText
+                text={`Relevant Coursework: ${item.coursework.join(', ')}`}
+                className="text-xs text-[var(--text)] mt-1 leading-relaxed block"
+              />
             )}
           </div>
         ))}

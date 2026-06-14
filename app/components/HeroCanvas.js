@@ -2,8 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 
-const BLUES = ['#2f7fff', '#4a9aff', '#6aaeff'];
-const YELLOWS = ['#f5c842', '#ffd966'];
+const ACCENT = '#2f7fff';
+const ACCENT2 = '#f5c842';
+const BLUES = [ACCENT];
+const YELLOWS = [ACCENT2];
 
 function randColor(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -48,8 +50,8 @@ export default function HeroCanvas() {
     }
 
     function init() {
-      W = canvas.width = canvas.offsetWidth;
-      H = canvas.height = canvas.offsetHeight;
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
       stateRef.current = {
         t: stateRef.current?.t ?? 0,
         particles: [
@@ -58,8 +60,8 @@ export default function HeroCanvas() {
           ...Array.from({ length: 20 }, () => mkP(2)),
         ],
         nodes: [
-          ...Array.from({ length: 30 }, () => mkNode('#2f7fff')),
-          ...Array.from({ length: 30 }, () => mkNode('#f5c842')),
+          ...Array.from({ length: 30 }, () => mkNode(ACCENT)),
+          ...Array.from({ length: 30 }, () => mkNode(ACCENT2)),
         ],
       };
     }
@@ -132,7 +134,7 @@ export default function HeroCanvas() {
         if (n.y < n.r * 5 || n.y > H - n.r * 5) n.dy *= -1;
         const pulse = Math.sin(state.t * n.speed * 60 + n.phase);
         const glow = n.r + pulse * 1.5;
-        const rgb = n.color === '#2f7fff' ? '47,127,255' : '245,200,66';
+        const rgb = n.color === ACCENT ? '47,127,255' : '245,200,66';
         const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, glow * 4);
         grad.addColorStop(0, `rgba(${rgb},0.22)`); grad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.beginPath(); ctx.globalAlpha = 1; ctx.fillStyle = grad;
@@ -155,8 +157,8 @@ export default function HeroCanvas() {
     };
     const onMouseLeave = () => { mouseRef.current = { x: -999, y: -999 }; };
 
-    canvas.parentElement?.addEventListener('mousemove', onMouseMove);
-    canvas.parentElement?.addEventListener('mouseleave', onMouseLeave);
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseleave', onMouseLeave);
     window.addEventListener('resize', init);
 
     init();
@@ -164,8 +166,8 @@ export default function HeroCanvas() {
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      canvas.parentElement?.removeEventListener('mousemove', onMouseMove);
-      canvas.parentElement?.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseleave', onMouseLeave);
       window.removeEventListener('resize', init);
     };
   }, []);
