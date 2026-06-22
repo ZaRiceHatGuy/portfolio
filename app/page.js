@@ -22,9 +22,9 @@ export default function Home() {
       <main className="relative z-10">
         <Hero />
 
-        <section id="about" className="px-[6vw] pt-16 pb-6 md:pt-24 md:pb-8">
-          <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-start">
+        <section id="about" className="px-5 sm:px-[6vw] pt-12 pb-6 md:pt-24 md:pb-8">
+          <div className="max-w-[1100px] mx-auto w-full flex flex-col gap-6 md:gap-8 overflow-visible">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
               <About />
               <Education />
               <Experience />
@@ -34,7 +34,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="projects" className="px-[6vw] pt-6 pb-16 md:pt-8 md:pb-24">
+        <section id="projects" className="px-5 sm:px-[6vw] pt-6 pb-12 md:pt-8 md:pb-24">
           <div className="max-w-[1100px] mx-auto">
             <Projects />
           </div>
@@ -45,7 +45,7 @@ export default function Home() {
           className="bg-[var(--bg)] min-h-[calc(100vh-var(--navbar-height))] flex flex-col"
         >
           <div className="fade-border-top shrink-0" />
-          <section className="flex-1 px-[6vw] py-12 md:py-16 flex flex-col min-h-0">
+          <section className="flex-1 px-5 sm:px-[6vw] py-10 sm:py-12 md:py-16 flex flex-col min-h-0">
             <div className="max-w-[1100px] mx-auto w-full flex-1 flex flex-col justify-center min-h-0">
               <Contact />
             </div>

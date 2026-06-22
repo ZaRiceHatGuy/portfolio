@@ -30,6 +30,8 @@ body {
   font-family: 'DM Mono', monospace;
   font-weight: 500;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .nav-link {
@@ -376,6 +378,20 @@ body {
   border-radius: 0.3rem;
   color: var(--text);
   border: 1px solid var(--border);
+}
+
+@keyframes skill-hint-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent2-rgb), 0); }
+  50% { box-shadow: 0 0 0 3px rgba(var(--accent2-rgb), 0.15); }
+}
+
+.skill-badge {
+  animation: skill-hint-pulse 3s ease-in-out infinite;
+}
+
+.skill-badge:hover,
+.skill-badge:focus-visible {
+  animation: none;
 }
 
 .contact-link {

@@ -51,11 +51,11 @@ export default function Projects() {
         className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1] mb-8"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 mb-8 sm:mb-10">
         {projects.map((p) => (
           <article
             key={p.name}
-            className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 flex flex-col gap-3 transition-all duration-300 hover:border-[rgba(var(--accent-rgb),0.35)] hover:-translate-y-1"
+            className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4 sm:p-5 flex flex-col gap-3 transition-all duration-300 hover:border-[rgba(var(--accent-rgb),0.35)] hover:-translate-y-1"
           >
             <DecryptText
               text={p.name}

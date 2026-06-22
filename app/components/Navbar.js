@@ -13,7 +13,7 @@ function SectionNavLink({ section, activeSection, onNavigate, variant = 'desktop
   const layoutClass =
     variant === 'desktop'
       ? 'group relative font-medium text-base py-5 inline-flex items-center justify-center tracking-wide no-underline cursor-pointer'
-      : 'group relative font-medium px-[6vw] text-lg tracking-wide no-underline cursor-pointer block';
+      : 'group relative font-medium px-5 sm:px-[6vw] text-base sm:text-lg tracking-wide no-underline cursor-pointer block';
 
   return (
     <a
@@ -40,6 +40,13 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const navRef = useRef(null);
   const links = ['home', 'about', 'projects', 'contact'];
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   useEffect(() => {
     const syncNavbarHeight = () => {
@@ -125,13 +132,13 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[6vw] py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
+      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-5 sm:px-[6vw] py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
     >
       {/* Logo */}
       <a
         href="#home"
         onClick={(e) => handleClick(e, 'home')}
-        className="font-medium text-xl text-[var(--text)] no-underline tracking-tight cursor-pointer py-5"
+        className="font-medium text-lg sm:text-xl text-[var(--text)] no-underline tracking-tight cursor-pointer py-4 sm:py-5"
       >
         <DecryptText text="DavidNTD" animateOnMount delay={100} />
       </a>
@@ -186,7 +193,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,13,15,0.97)] border-b border-[var(--border)] flex flex-col gap-4 py-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,13,15,0.97)] border-b border-[var(--border)] flex flex-col gap-2 py-3 max-h-[calc(100dvh-var(--navbar-height))] overflow-y-auto">
           {links.map(s => (
             <SectionNavLink
               key={s}
@@ -198,7 +205,7 @@ export default function Navbar() {
           ))}
 
           {/* Mobile Resume CTA */}
-          <div className="navbar-mobile-resume px-[6vw] pb-1">
+          <div className="navbar-mobile-resume px-5 sm:px-[6vw] pb-2">
             <a
               href="/Resume/David Nguyen - Resume.pdf"
               target="_blank"

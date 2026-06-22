@@ -40,7 +40,7 @@ function ContactLinkCard({ Icon, href, value, delay = 0, compactText = false }) 
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
-      className="group flex items-center gap-2.5 p-3 rounded-xl bg-[var(--bg3)] border border-[var(--border)] no-underline w-full min-w-0 transition-all duration-300 hover:border-[rgba(var(--accent-rgb),0.35)] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)]"
+      className="group flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-[var(--bg3)] border border-[var(--border)] no-underline w-full min-w-0 transition-all duration-300 hover:border-[rgba(var(--accent-rgb),0.35)] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,0,0,0.25)]"
     >
       <DecryptReveal delay={delay}>
         <div className="w-9 h-9 shrink-0 rounded-lg flex items-center justify-center bg-[var(--card)] border border-[var(--border)] transition-colors duration-300 group-hover:border-[var(--accent)] group-hover:bg-[rgba(var(--accent-rgb),0.08)]">
@@ -49,8 +49,8 @@ function ContactLinkCard({ Icon, href, value, delay = 0, compactText = false }) 
       </DecryptReveal>
       <DecryptText
         text={value}
-        className={`text-white min-w-0 flex-1 leading-snug block text-[14px] ${
-          compactText ? 'whitespace-nowrap' : ''
+        className={`text-white min-w-0 flex-1 leading-snug block text-[13px] sm:text-[14px] break-words ${
+          compactText ? 'min-[520px]:whitespace-nowrap' : ''
         }`}
       />
     </a>
@@ -96,7 +96,7 @@ export default function Contact() {
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10 sm:items-end">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 lg:items-end">
       <div className="flex flex-col gap-4 min-w-0">
         <DecryptText
           text="Contact Me"
@@ -106,10 +106,10 @@ export default function Contact() {
         <DecryptText
           as="p"
           text="Send a message or reach out — I'd love to hear from you."
-          className="text-base text-[var(--muted)] leading-relaxed whitespace-nowrap"
+          className="text-sm sm:text-base text-[var(--muted)] leading-relaxed"
         />
 
-        <div className="grid grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] gap-3 min-w-0">
+        <div className="grid grid-cols-1 min-[520px]:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] gap-3 min-w-0">
           <div className="flex flex-col gap-4 min-w-0">
             <ContactLinkCard {...phoneLink} delay={0} />
             <ContactLinkCard {...emailLink} delay={160} compactText />
@@ -121,9 +121,9 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 sm:p-4 min-w-0 w-full">
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3.5 sm:p-4 min-w-0 w-full">
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label htmlFor="name" className="block mb-1.5 text-sm text-white">
                 <DecryptText text="Name" />

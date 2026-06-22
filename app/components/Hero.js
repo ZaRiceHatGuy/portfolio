@@ -1,9 +1,10 @@
 "use client";
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { MapPin, Mail, Phone, Briefcase, Download, FileText } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { MapPin, Mail, Phone, FileText } from 'lucide-react';
 import DecryptText from './DecryptText';
 import DecryptReveal from './DecryptReveal';
+import { PanelCard, PanelLabel } from './PanelCard';
 
 const GitHubIcon = ({ className }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -17,8 +18,150 @@ const LinkedInIcon = ({ className }) => (
   </svg>
 );
 
+const contactItems = [
+  { Icon: MapPin, text: 'Calgary, AB, Canada', href: null, delay: 1400 },
+  { Icon: Phone, text: '+1 (403) 827-2659', href: 'tel:+14038272659', delay: 1500 },
+  { Icon: Mail, text: 'davidnguyen107206@gmail.com', href: 'mailto:davidnguyen107206@gmail.com', delay: 1600 },
+];
+
+const contactCardBase =
+  'group flex gap-2 p-2 rounded-lg border border-[var(--border)] bg-[var(--bg3)] hover:border-[rgba(var(--accent-rgb),0.35)] transition-all duration-300 h-full min-w-0';
+
+const contactCardClass = `${contactCardBase} items-center`;
+
+const iconSlotClass = 'w-8 h-8 shrink-0 flex items-center justify-center';
+
+const iconBoxClass =
+  `${iconSlotClass} rounded-lg bg-[var(--bg3)] border border-[var(--border)] group-hover:border-[var(--accent)] group-hover:bg-[rgba(var(--accent-rgb),0.08)] transition-colors duration-300`;
+
+const iconClass =
+  'text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300';
+
+function ContactRow({ Icon, text, href, delay }) {
+  const content = (
+    <>
+      <DecryptReveal animateOnMount delay={delay}>
+        <div className={iconBoxClass}>
+          <Icon size={15} className={iconClass} />
+        </div>
+      </DecryptReveal>
+      <DecryptText text={text} animateOnMount delay={delay} className="text-[0.7rem] sm:text-xs text-[var(--text)] leading-snug min-w-0 break-words" />
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className={`${contactCardClass} no-underline`}>
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={contactCardClass}>{content}</div>;
+}
+
+function HeroActions() {
+  return (
+    <div className="flex items-stretch gap-2 h-full min-h-[2.75rem] sm:min-h-0 self-stretch w-full">
+      <a
+        href="/Resume/David Nguyen - Resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${contactCardClass} flex-1 min-w-0 h-full no-underline`}
+      >
+        <DecryptReveal animateOnMount delay={1750}>
+          <span className={iconSlotClass}>
+            <FileText size={15} className={iconClass} />
+          </span>
+        </DecryptReveal>
+        <DecryptText text="Resume" animateOnMount delay={1800} className="text-[0.7rem] sm:text-xs text-[var(--text)] leading-snug" />
+      </a>
+      <a
+        href="https://github.com/ZaRiceHatGuy"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="GitHub"
+        className={`${contactCardClass} aspect-square h-full min-w-[2.75rem] shrink-0 justify-center no-underline`}
+      >
+        <DecryptReveal animateOnMount delay={1900}>
+          <GitHubIcon className={iconClass} />
+        </DecryptReveal>
+      </a>
+      <a
+        href="http://www.linkedin.com/in/davidntd"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="LinkedIn"
+        className={`${contactCardClass} aspect-square h-full min-w-[2.75rem] shrink-0 justify-center no-underline`}
+      >
+        <DecryptReveal animateOnMount delay={2000}>
+          <LinkedInIcon className={iconClass} />
+        </DecryptReveal>
+      </a>
+    </div>
+  );
+}
+
 export default function Hero() {
   const [displayName, setDisplayName] = useState('');
+  const nameRef = useRef(null);
+  const introCardRef = useRef(null);
+
+  const fitNameToIntro = useCallback(() => {
+    const nameEl = nameRef.current;
+    const introEl = introCardRef.current;
+    if (!nameEl || !introEl || !displayName) return;
+
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      nameEl.style.fontSize = '';
+      return;
+    }
+
+    const maxWidth = introEl.getBoundingClientRect().width;
+    if (maxWidth <= 0) return;
+
+    nameEl.style.fontSize = '16px';
+    const baseWidth = nameEl.scrollWidth;
+    if (baseWidth <= 0) return;
+
+    let size = Math.floor((16 * maxWidth) / baseWidth);
+    size = Math.max(16, Math.min(size, 128));
+    nameEl.style.fontSize = `${size}px`;
+
+    while (nameEl.scrollWidth <= maxWidth && size < 128) {
+      size += 1;
+      nameEl.style.fontSize = `${size}px`;
+    }
+    if (nameEl.scrollWidth > maxWidth) {
+      nameEl.style.fontSize = `${size - 1}px`;
+    }
+  }, [displayName]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const runFit = () => {
+      if (cancelled) return;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if (!cancelled) fitNameToIntro();
+        });
+      });
+    };
+
+    runFit();
+    document.fonts?.ready.then(runFit);
+
+    const introEl = introCardRef.current;
+    const observer = introEl ? new ResizeObserver(runFit) : null;
+    observer?.observe(introEl);
+    window.addEventListener('resize', runFit);
+
+    return () => {
+      cancelled = true;
+      observer?.disconnect();
+      window.removeEventListener('resize', runFit);
+    };
+  }, [fitNameToIntro]);
 
   useEffect(() => { setTimeout(() => startFullTransition(), 500); }, []);
 
@@ -37,12 +180,10 @@ export default function Hero() {
     }, 60);
   };
 
-  const bridgeTransition = (oldText, text1, text2, duration, onComplete) => {
+  const bridgeTransition = (oldText, targetText, duration, onComplete) => {
     const startTime = Date.now();
-    const fullText = text1 + ' ' + text2;
-    const wrapPoint = text1.length;
     const interval = setInterval(() => {
-      let progress = Math.min(1, (Date.now() - startTime) / duration);
+      const progress = Math.min(1, (Date.now() - startTime) / duration);
       if (progress < 0.35) {
         const dissolveProgress = progress / 0.35;
         const dissolved = oldText.split('').map(char =>
@@ -51,27 +192,15 @@ export default function Hero() {
         setDisplayName(dissolved);
       } else {
         const typeProgress = Math.pow((progress - 0.35) / 0.65, 0.7);
-        const totalChars = Math.floor(typeProgress * fullText.length);
-        let line1Chars = Math.min(totalChars, wrapPoint);
-        let line2Chars = Math.max(0, totalChars - wrapPoint);
-        const targetLine1 = fullText.substring(0, wrapPoint);
-        const targetLine2 = fullText.substring(wrapPoint);
-        const isNearWrap = typeProgress > 0.5 && line2Chars === 0;
-        const buildLine = (target, typed, isLine1) => target.split('').map((char, i) => {
+        const typed = Math.floor(typeProgress * targetText.length);
+        const flickered = targetText.split('').map((char, i) => {
           if (char === ' ') return ' ';
-          const isNearEnd = isLine1 && i >= wrapPoint - 3;
-          if (i < typed) {
-            const shouldFlicker = (isNearWrap && isNearEnd) ? Math.random() < 0.8 : Math.random() < 0.25 * (1 - typeProgress);
-            return shouldFlicker ? getRandomChar() : char;
-          }
-          if (isLine1) return getRandomChar();
-          return (line2Chars > 0 || typeProgress > 0.5) && Math.random() < 0.4 ? '·' : getRandomChar();
+          if (i < typed) return Math.random() < 0.25 * (1 - typeProgress) ? getRandomChar() : char;
+          return Math.random() < 0.4 ? getRandomChar() : '·';
         }).join('');
-        const line1 = buildLine(targetLine1, line1Chars, true);
-        const line2 = buildLine(targetLine2, line2Chars, false);
-        setDisplayName(line2Chars > 0 || typeProgress > 0.5 ? line1 + '\n' + line2 : line1);
+        setDisplayName(flickered);
       }
-      if (progress >= 1) { clearInterval(interval); setDisplayName(text1 + '\n' + text2); onComplete?.(); }
+      if (progress >= 1) { clearInterval(interval); setDisplayName(targetText); onComplete?.(); }
     }, 35);
   };
 
@@ -86,112 +215,68 @@ export default function Hero() {
       if (stepIndex < steps.length) {
         smoothFlicker(steps[stepIndex].text, steps[stepIndex].duration, () => { stepIndex++; processStep(); });
       } else {
-        bridgeTransition('たいよう(デビッド)げん', 'Thái Dương', '(David) Nguyễn', 1500, () => {});
+        bridgeTransition('たいよう(デビッド)げん', 'Thái Dương (David) Nguyễn', 1500, () => {});
       }
     };
     processStep();
   };
 
   return (
-    <div id="home" className="min-h-screen flex flex-col justify-center px-6 md:px-[6vw] pt-28 pb-16 relative">
+    <div id="home" className="min-h-screen flex flex-col justify-center px-5 sm:px-[6vw] pt-24 sm:pt-28 pb-12 sm:pb-16 relative">
       <div className="max-w-[1100px] mx-auto w-full">
-        <div className="flex flex-col-reverse md:flex-row md:justify-between md:items-start gap-8 md:gap-12">
-
-          {/* Text content */}
-          <div className="flex-1">
-            <h1 className="text-[clamp(2.2rem,8vw,3.8rem)] leading-[1.3] tracking-tight text-[var(--text)] mb-4 whitespace-pre-line">
-              {displayName.split('\n').map((line, i) => (
-                <React.Fragment key={i}>{line}{i < displayName.split('\n').length - 1 && <br />}</React.Fragment>
-              ))}
-            </h1>
-
-            <DecryptText
-              as="p"
-              animateOnMount
-              delay={1200}
-              text="SAIT Software Development Student, specializing in front-end development and database systems. Passionate and interested in learning about embedded systems, robotics, and artificial intelligence."
-              className="text-sm text-[var(--muted)] max-w-[480px] mb-5 leading-relaxed"
-            />
-
-            <div className="flex flex-col gap-2 mb-6">
-              <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <DecryptReveal animateOnMount delay={1400}>
-                  <MapPin size={16} className="text-[var(--accent)]" />
-                </DecryptReveal>
-                <DecryptText text="Calgary, AB, Canada" animateOnMount delay={1400} />
-              </div>
-              <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <DecryptReveal animateOnMount delay={1500}>
-                  <Phone size={16} className="text-[var(--accent)]" />
-                </DecryptReveal>
-                <DecryptText text="+1 (403) 827-2659" animateOnMount delay={1500} />
-              </div>
-              <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <DecryptReveal animateOnMount delay={1600}>
-                  <Mail size={16} className="text-[var(--accent)]" />
-                </DecryptReveal>
-                <DecryptText text="davidnguyen107206@gmail.com" animateOnMount delay={1600} />
-              </div>
-              <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
-                <DecryptReveal animateOnMount delay={1700}>
-                  <Briefcase size={16} className="text-[var(--accent)]" />
-                </DecryptReveal>
-                <DecryptText text="Open to co-op/internship opportunities" animateOnMount delay={1700} />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 flex-wrap">
-              <a
-                href="/Resume/David Nguyen - Resume.pdf"
-                target="_blank"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--accent)] bg-transparent text-[var(--accent)] text-sm transition-all duration-300 hover:border-[var(--accent2)] hover:text-[var(--accent2)] hover:scale-[1.02]"
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-6 md:gap-10 items-stretch">
+          <div className="flex flex-col min-w-0 gap-3 sm:gap-4 overflow-hidden">
+            <div className="w-full min-w-0 overflow-hidden md:overflow-visible">
+              <h1
+                ref={nameRef}
+                className="w-full md:w-max max-w-full min-w-0 max-md:text-[clamp(1.75rem,7.5vw,2.5rem)] leading-tight tracking-tight text-[var(--text)] max-md:whitespace-normal md:whitespace-nowrap"
               >
-                <DecryptReveal animateOnMount delay={1750}>
-                  <FileText size={16} />
-                </DecryptReveal>
-                <DecryptText text="Resume" animateOnMount delay={1800} />
-                <DecryptReveal animateOnMount delay={1850}>
-                  <Download size={14} />
-                </DecryptReveal>
-              </a>
-              <DecryptReveal animateOnMount delay={1900}>
-                <a href="https://github.com/ZaRiceHatGuy" target="_blank" rel="noopener noreferrer" title="GitHub"
-                  className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[var(--accent2)] hover:scale-[1.06] bg-transparent">
-                  <GitHubIcon className="text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300" />
-                </a>
-              </DecryptReveal>
-              <DecryptReveal animateOnMount delay={2000}>
-                <a href="http://www.linkedin.com/in/davidntd" target="_blank" rel="noopener noreferrer" title="LinkedIn"
-                  className="group flex items-center justify-center w-10 h-10 rounded-xl border border-[var(--accent)] transition-all duration-300 hover:border-[var(--accent2)] hover:scale-[1.06] bg-transparent">
-                  <LinkedInIcon className="text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300" />
-                </a>
-              </DecryptReveal>
+                {displayName}
+              </h1>
             </div>
+            <PanelCard ref={introCardRef} className="flex-1 flex flex-col px-3.5 sm:px-4 pt-4 pb-3 min-w-0" hover={false}>
+              <PanelLabel>Introduction</PanelLabel>
+              <div className="pl-3 border-l-2 border-[var(--border)] mb-3">
+                <DecryptText
+                  as="p"
+                  animateOnMount
+                  delay={1200}
+                  text="Junior Web Developer specializing in React and Next.js. Experience integrating Supabase and PostgreSQL for data and backend services. Interested in robotics and artificial intelligence. Open to co-op/internship opportunities."
+                  className="text-sm text-[var(--text)] leading-relaxed"
+                />
+              </div>
+              <div className="pt-3 border-t border-[var(--border)]">
+                <p className="text-[0.65rem] uppercase tracking-[0.14em] text-[var(--muted)] mb-2">Contact</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 items-stretch">
+                  {contactItems.map((item) => (
+                    <ContactRow key={item.text} {...item} />
+                  ))}
+                  <HeroActions />
+                </div>
+              </div>
+            </PanelCard>
           </div>
 
-          {/* Simplified but polished version */}
-          <DecryptReveal
-            animateOnMount
-            delay={900}
-            className="w-[160px] h-[160px] md:w-[320px] md:h-[320px] rounded-full flex-shrink-0 mx-auto md:mx-0 relative group"
-          >
-          <div className="w-full h-full relative group">
-            {/* Single smooth rotating gradient */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent2)] to-[var(--accent)] animate-spin-slow opacity-30 group-hover:opacity-60 transition-all duration-500 blur-lg"></div>
-            
-            {/* Glass background with shadow */}
-            <div className="absolute inset-[3px] rounded-full bg-[var(--card)]/80 backdrop-blur-sm shadow-[0_0_20px_rgba(var(--accent-rgb),0.15)] group-hover:shadow-[0_0_30px_rgba(var(--accent2-rgb),0.25)] transition-all duration-500"></div>
-            
-            {/* Image */}
-            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-[var(--accent2)]/50 transition-all duration-500">
-              <img 
-                src="/images/Profile.png"
-                alt="David Nguyen"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-          </div>
-          </DecryptReveal>
+          <PanelCard className="px-3.5 sm:px-4 pt-4 pb-3 shrink-0 mx-auto md:mx-0 w-full max-w-sm md:max-w-none md:w-auto flex flex-col min-w-0" hover={false}>
+            <PanelLabel>Profile</PanelLabel>
+            <DecryptReveal
+              animateOnMount
+              delay={900}
+              className="w-[min(240px,72vw)] h-[min(240px,72vw)] sm:w-[200px] sm:h-[200px] md:w-[280px] md:h-[280px] relative group mx-auto"
+            >
+              <div className="w-full h-full relative">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--accent)] via-[var(--accent2)] to-[var(--accent)] animate-spin-slow opacity-30 group-hover:opacity-60 transition-all duration-500 blur-lg" />
+                <div className="absolute inset-[3px] rounded-full bg-[var(--card)]/80 backdrop-blur-sm shadow-[0_0_20px_rgba(var(--accent-rgb),0.15)] group-hover:shadow-[0_0_30px_rgba(var(--accent2-rgb),0.25)] transition-all duration-500" />
+                <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20 group-hover:border-[var(--accent2)]/50 transition-all duration-500">
+                  <img
+                    src="/images/Profile.png"
+                    alt="David Nguyen"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              </div>
+            </DecryptReveal>
+          </PanelCard>
         </div>
       </div>
     </div>
