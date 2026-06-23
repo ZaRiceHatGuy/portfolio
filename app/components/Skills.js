@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { MousePointer2 } from 'lucide-react';
 import DecryptText from './DecryptText';
 import DecryptReveal from './DecryptReveal';
@@ -57,18 +57,76 @@ const skillGroups = [
 
 const GRID_CLASS = 'grid grid-cols-4 min-[420px]:grid-cols-6 sm:grid-cols-8 gap-x-1.5 sm:gap-x-2 gap-y-3';
 
+const HEADER_CARD_CLASS =
+  'rounded-lg px-3 py-2.5 min-h-[2.875rem] h-full border';
+
+function HintCard() {
+  return (
+    <div
+      className={`${HEADER_CARD_CLASS} flex items-center gap-2 text-[0.65rem] sm:text-[0.7rem] text-[var(--muted)] border-dashed border-[var(--border)] bg-[rgba(var(--accent-rgb),0.04)] w-full lg:w-auto lg:max-w-fit`}
+    >
+      <MousePointer2 size={14} className="text-[var(--accent2)] shrink-0 animate-pulse" />
+      <span className="md:hidden">
+        <DecryptText text="Tap any icon for name & proficiency" />
+      </span>
+      <span className="hidden md:inline">
+        <DecryptText text="Hover any icon for name & proficiency" />
+      </span>
+    </div>
+  );
+}
+
+function LegendCard() {
+  const barTrackClass =
+    'w-14 shrink-0 h-1 rounded-full bg-[var(--card)] overflow-hidden border border-[var(--border)]';
+
+  return (
+    <div
+      className={`${HEADER_CARD_CLASS} flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.65rem] border-[var(--border)] bg-[var(--bg3)] w-full lg:w-auto lg:max-w-fit`}
+    >
+      {Object.entries(PROFICIENCY).map(([label, style]) => (
+        <div key={label} className="flex items-center gap-2">
+          <span className={`px-1.5 py-0.5 rounded border whitespace-nowrap ${style.badgeClass}`}>
+            {label}
+          </span>
+          <div className={barTrackClass}>
+            <div className={`h-full rounded-full ${style.barClass}`} style={{ width: `${style.fill}%` }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function SkillsBlock() {
+  const [activeSkill, setActiveSkill] = useState(null);
+
+  useEffect(() => {
+    if (!activeSkill) return;
+
+    const handlePointerDown = (e) => {
+      if (!e.target.closest('[data-skill-badge]')) {
+        setActiveSkill(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [activeSkill]);
+
   return (
     <div className="w-full overflow-visible">
-      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr_auto] gap-3 lg:gap-4 mb-4 items-stretch">
         <DecryptText
           text="Tech Stack"
           as="h2"
-          className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1]"
+          className="text-[clamp(1.875rem,4vw,2.5rem)] tracking-tight leading-[1.1] lg:justify-self-start lg:self-end"
         />
-        <div className="flex items-center gap-2 text-[0.65rem] sm:text-[0.7rem] text-[var(--muted)] border border-dashed border-[var(--border)] rounded-lg px-3 py-2 bg-[rgba(var(--accent-rgb),0.04)] w-full sm:w-auto sm:max-w-fit">
-          <MousePointer2 size={14} className="text-[var(--accent2)] shrink-0 animate-pulse" />
-          <DecryptText text="Hover any icon for name & proficiency" />
+        <div className="lg:justify-self-center w-full lg:w-auto flex lg:justify-center h-full">
+          <HintCard />
+        </div>
+        <div className="lg:justify-self-end w-full lg:w-auto flex lg:justify-end h-full">
+          <LegendCard />
         </div>
       </div>
 
@@ -84,23 +142,15 @@ export default function SkillsBlock() {
                 }`}
               />
               {group.skills.map((s, skillIdx) => (
-                <SkillBadge key={s.name} skill={s} revealDelay={skillIdx * 40} />
+                <SkillBadge
+                  key={s.name}
+                  skill={s}
+                  revealDelay={skillIdx * 40}
+                  isActive={activeSkill === s.name}
+                  onActivate={() => setActiveSkill((current) => (current === s.name ? null : s.name))}
+                />
               ))}
             </Fragment>
-          ))}
-        </div>
-
-        <div className="mt-5 pt-4 border-t border-[var(--border)] flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-5">
-          <span className="text-[0.65rem] uppercase tracking-wide text-[var(--muted)]">Legend</span>
-          {Object.entries(PROFICIENCY).map(([label, style]) => (
-            <div key={label} className="flex items-center gap-2">
-              <div className="w-14 h-1 rounded-full bg-[var(--bg3)] overflow-hidden border border-[var(--border)]">
-                <div className={`h-full rounded-full ${style.barClass}`} style={{ width: `${style.fill}%` }} />
-              </div>
-              <span className={`text-[0.65rem] px-1.5 py-0.5 rounded border ${style.badgeClass}`}>
-                {label}
-              </span>
-            </div>
           ))}
         </div>
       </div>
@@ -108,15 +158,30 @@ export default function SkillsBlock() {
   );
 }
 
-function SkillBadge({ skill, revealDelay = 0 }) {
+function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
   const prof = PROFICIENCY[skill.level];
 
   return (
-    <div className="group/skill relative justify-self-center w-[44px] h-[44px] sm:w-[50px] sm:h-[50px] z-0 hover:z-50 focus-within:z-50">
+    <div
+      data-skill-badge
+      className={`group/skill relative justify-self-center w-[44px] h-[44px] sm:w-[50px] sm:h-[50px] ${
+        isActive ? 'z-50' : 'z-0'
+      } hover:z-50 focus-within:z-50`}
+    >
       <DecryptReveal delay={revealDelay} className="w-full h-full">
         <button
           type="button"
-          className="skill-badge relative w-full h-full rounded-xl bg-[var(--bg3)] border border-[var(--border)] flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-[var(--accent2)] hover:bg-[rgba(var(--accent2-rgb),0.08)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          onClick={() => {
+            if (window.matchMedia('(max-width: 767px)').matches) {
+              onActivate();
+            }
+          }}
+          aria-expanded={isActive}
+          className={`skill-badge relative w-full h-full rounded-xl bg-[var(--bg3)] border border-[var(--border)] flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-[var(--accent2)] hover:bg-[rgba(var(--accent2-rgb),0.08)] hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] max-md:active:border-[var(--accent2)] max-md:active:bg-[rgba(var(--accent2-rgb),0.08)] ${
+            isActive
+              ? 'max-md:border-[var(--accent2)] max-md:bg-[rgba(var(--accent2-rgb),0.08)] max-md:-translate-y-1 max-md:shadow-[0_8px_24px_rgba(0,0,0,0.35)]'
+              : ''
+          }`}
           aria-label={`${skill.name}, ${skill.level}`}
         >
           <img
@@ -124,13 +189,17 @@ function SkillBadge({ skill, revealDelay = 0 }) {
             alt=""
             width={26}
             height={26}
-            className="object-contain transition-transform duration-300 group-hover/skill:scale-110"
+            className={`object-contain transition-transform duration-300 group-hover/skill:scale-110 ${
+              isActive ? 'max-md:scale-110' : ''
+            }`}
           />
         </button>
       </DecryptReveal>
 
       <div
-        className="absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[172px] w-max max-w-[220px] opacity-0 translate-y-1 pointer-events-none transition-all duration-300 group-hover/skill:opacity-100 group-hover/skill:translate-y-0 group-focus-within/skill:opacity-100 group-focus-within/skill:translate-y-0"
+        className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[172px] w-max max-w-[220px] transition-all duration-300 max-md:pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
+          isActive ? 'max-md:opacity-100 max-md:translate-y-0' : 'max-md:opacity-0 max-md:translate-y-1'
+        }`}
         role="tooltip"
       >
         <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 rotate-45 bg-[#121218] border-l border-t border-[var(--border)]" />

@@ -25,14 +25,14 @@ const contactItems = [
 ];
 
 const contactCardBase =
-  'group flex gap-2 p-2 rounded-lg border border-[var(--border)] bg-[var(--bg3)] hover:border-[rgba(var(--accent-rgb),0.35)] transition-all duration-300 h-full min-w-0';
+  'group flex gap-2 p-2 rounded-lg border border-[var(--border)] bg-[var(--bg3)] hover:border-[rgba(var(--accent2-rgb),0.55)] transition-all duration-300 h-full min-w-0';
 
 const contactCardClass = `${contactCardBase} items-center`;
 
 const iconSlotClass = 'w-8 h-8 shrink-0 flex items-center justify-center';
 
 const iconBoxClass =
-  `${iconSlotClass} rounded-lg bg-[var(--bg3)] border border-[var(--border)] group-hover:border-[var(--accent)] group-hover:bg-[rgba(var(--accent-rgb),0.08)] transition-colors duration-300`;
+  `${iconSlotClass} rounded-lg bg-[var(--bg3)] border border-[var(--border)] group-hover:border-[var(--accent2)] group-hover:bg-[rgba(var(--accent2-rgb),0.08)] transition-colors duration-300`;
 
 const iconClass =
   'text-[var(--accent)] group-hover:text-[var(--accent2)] transition-colors duration-300';
@@ -222,10 +222,10 @@ export default function Hero() {
   };
 
   return (
-    <div id="home" className="min-h-screen flex flex-col justify-center px-5 sm:px-[6vw] pt-24 sm:pt-28 pb-12 sm:pb-16 relative">
-      <div className="max-w-[1100px] mx-auto w-full">
+    <div id="home" className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-12 sm:pb-16 relative">
+      <div className="max-w-[1280px] mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_auto] gap-6 md:gap-10 items-stretch">
-          <div className="flex flex-col min-w-0 gap-3 sm:gap-4 overflow-hidden">
+          <div className="order-2 md:order-none flex flex-col min-w-0 gap-3 sm:gap-4 overflow-hidden">
             <div className="w-full min-w-0 overflow-hidden md:overflow-visible">
               <h1
                 ref={nameRef}
@@ -257,7 +257,7 @@ export default function Hero() {
             </PanelCard>
           </div>
 
-          <PanelCard className="px-3.5 sm:px-4 pt-4 pb-3 shrink-0 mx-auto md:mx-0 w-full max-w-sm md:max-w-none md:w-auto flex flex-col min-w-0" hover={false}>
+          <PanelCard className="order-1 md:order-none md:col-start-2 px-3.5 sm:px-4 pt-4 pb-3 shrink-0 mx-auto md:mx-0 w-full max-w-sm md:max-w-none md:w-auto flex flex-col min-w-0" hover={false}>
             <PanelLabel>Profile</PanelLabel>
             <DecryptReveal
               animateOnMount

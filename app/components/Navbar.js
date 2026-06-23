@@ -13,7 +13,7 @@ function SectionNavLink({ section, activeSection, onNavigate, variant = 'desktop
   const layoutClass =
     variant === 'desktop'
       ? 'group relative font-medium text-base py-5 inline-flex items-center justify-center tracking-wide no-underline cursor-pointer'
-      : 'group relative font-medium px-5 sm:px-[6vw] text-base sm:text-lg tracking-wide no-underline cursor-pointer block';
+      : 'group relative font-medium px-4 sm:px-6 lg:px-8 text-base sm:text-lg tracking-wide no-underline cursor-pointer block';
 
   return (
     <a
@@ -132,7 +132,7 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-5 sm:px-[6vw] py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
+      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-4 sm:px-6 lg:px-8 py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
     >
       {/* Logo */}
       <a
@@ -205,7 +205,7 @@ export default function Navbar() {
           ))}
 
           {/* Mobile Resume CTA */}
-          <div className="navbar-mobile-resume px-5 sm:px-[6vw] pb-2">
+          <div className="navbar-mobile-resume px-4 sm:px-6 lg:px-8 pb-2">
             <a
               href="/Resume/David Nguyen - Resume.pdf"
               target="_blank"
