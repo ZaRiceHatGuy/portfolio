@@ -217,9 +217,9 @@ export default function Navbar({ brand = "DavidNTD", resumeUrl = "/Resume/David 
           target="_blank"
           rel="noopener noreferrer"
           className="navbar-resume"
-          title="CV/Resume"
+          title="Resume/CV"
         >
-          <Decrypt text="CV/Resume" animateOnMount delay={800} />
+          <Decrypt text="Resume/CV" animateOnMount delay={800} />
         </a>
 
         <button
