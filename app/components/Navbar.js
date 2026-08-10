@@ -1,50 +1,103 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import DecryptText from './DecryptText';
-import DecryptReveal from './DecryptReveal';
+import { Settings } from 'lucide-react';
+import Decrypt from './Decrypt';
+import { useTitleScreen } from './StartScreen';
 
-function SectionNavLink({ section, activeSection, onNavigate, variant = 'desktop' }) {
-  const isActive = activeSection === section;
-  const colorClass = isActive
-    ? '!text-[var(--accent)]'
-    : 'text-[var(--muted)] hover:!text-[var(--accent2)]';
+// One entry per page section — label matches the on-page section title,
+// id matches the section's DOM id.
+const LINKS = [
+  { id: 'home', label: 'Introduction' },
+  { id: 'about', label: 'Foundations' },
+  { id: 'experience', label: 'Career Log' },
+  { id: 'skills', label: 'Tech Stack' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'contact', label: 'Contact Me' },
+];
 
-  const layoutClass =
-    variant === 'desktop'
-      ? 'group relative font-medium text-base py-5 inline-flex items-center justify-center tracking-wide no-underline cursor-pointer'
-      : 'group relative font-medium px-4 sm:px-6 lg:px-8 text-base sm:text-lg tracking-wide no-underline cursor-pointer block';
+const DELAYS = { home: 200, about: 300, experience: 400, skills: 500, projects: 600, contact: 700 };
 
+// Manual rAF-based smooth scroll. Native smooth scrolling (CSS
+// `scroll-behavior` or `behavior: 'smooth'`) silently fails in some embedded
+// Chromium views, so we animate the scroll ourselves for consistent behavior.
+function smoothScrollTo(targetY, duration = 650) {
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (Math.abs(diff) < 2) return;
+  const start = performance.now();
+  const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const step = (now) => {
+    const t = Math.min(1, (now - start) / duration);
+    window.scrollTo(0, Math.round(startY + diff * easeInOutCubic(t)));
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// Retro button look — chunky pixel border with inset bevels. Active sections
+// light up in yellow like a pressed game button.
+const btnBase =
+  'inline-flex items-center justify-center gap-1.5 font-pixel text-[0.55rem] lg:text-[0.6rem] uppercase tracking-[0.08em] no-underline cursor-pointer select-none border-2 border-[#000] px-2.5 py-2 transition-all duration-150';
+const btnIdle =
+  'bg-[var(--bg3)] text-[var(--muted)] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),inset_-2px_-2px_0_rgba(0,0,0,0.35)] hover:text-[var(--text)] hover:bg-[var(--bg2)] hover:brightness-125';
+const btnActive =
+  'bg-[var(--accent2)] text-[#0b0b1a] shadow-[inset_-3px_-3px_0_rgba(0,0,0,0.25),inset_3px_3px_0_rgba(255,255,255,0.35),0_2px_0_#7a5c10] hover:brightness-110';
+
+function RetroNavButton({ link, active, onNavigate, variant }) {
+  const cls = variant === 'mobile' ? `${btnBase} w-full justify-start` : `${btnBase} w-full`;
   return (
     <a
-      href={`#${section}`}
-      onClick={(e) => onNavigate(e, section)}
-      className={`${layoutClass} ${colorClass}`}
+      href={`#${link.id}`}
+      onClick={(e) => onNavigate(e, link.id)}
+      aria-current={active ? 'true' : undefined}
+      className={`${cls} ${active ? btnActive : btnIdle}`}
     >
-      <span className="relative inline-block uppercase">
-        <DecryptText text={section} animateOnMount delay={section === 'home' ? 200 : section === 'about' ? 300 : section === 'projects' ? 400 : 500} />
-        <span
-          className={`absolute left-1/2 -translate-x-1/2 bottom-[-4px] h-[2px] transition-all duration-300 ease-out ${
-            isActive
-              ? 'w-full bg-[var(--accent)]'
-              : 'w-0 bg-[var(--accent2)] group-hover:w-full'
-          }`}
-        />
-      </span>
+      <Decrypt text={link.label} animateOnMount delay={DELAYS[link.id]} />
     </a>
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ brand = "DavidNTD", resumeUrl = "/Resume/David Nguyen - Resume.pdf" }) {
   const [open, setOpen] = useState(false);
+  const titleScreen = useTitleScreen();
   const [activeSection, setActiveSection] = useState('home');
   const navRef = useRef(null);
-  const links = ['home', 'about', 'projects', 'contact'];
 
+  const showTitle = () => {
+    setOpen(false);
+    titleScreen?.showTitle?.();
+  };
+
+  const goToTop = () => {
+    setOpen(false);
+    smoothScrollTo(0);
+  };
+
+  // Only touch the scroll lock while the menu is actually open, so it
+  // never clobbers the title screen's own lock when the menu is closed.
   useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : '';
+    if (!open) return;
+    document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  // Close the dropdown on outside click / Escape.
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) setOpen(false);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKey);
     };
   }, [open]);
 
@@ -77,34 +130,34 @@ export default function Navbar() {
     const handleScroll = () => {
       const navbarHeight = getNavbarHeight();
       const scrollPosition = window.scrollY + navbarHeight + 50;
-      
+
       let currentSection = 'home';
       let minDistance = Infinity;
-      
-      for (const sectionId of links) {
-        const element = document.getElementById(sectionId);
+
+      for (const { id } of LINKS) {
+        const element = document.getElementById(id);
         if (element) {
           const offsetTop = element.offsetTop;
           const offsetBottom = offsetTop + element.offsetHeight;
-          
+
           if (scrollPosition >= offsetTop && scrollPosition <= offsetBottom) {
-            currentSection = sectionId;
+            currentSection = id;
             break;
           }
-          
+
           const distanceToTop = Math.abs(scrollPosition - offsetTop);
           if (distanceToTop < minDistance) {
             minDistance = distanceToTop;
-            currentSection = sectionId;
+            currentSection = id;
           }
         }
       }
-      
+
       setActiveSection(currentSection);
     };
-    
+
     handleScroll();
-    
+
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
@@ -115,16 +168,21 @@ export default function Navbar() {
         ticking = true;
       }
     };
-    
+
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, [links]);
+  }, []);
 
   const handleClick = (e, sectionId) => {
     e.preventDefault();
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const offset = getComputedStyle(document.documentElement)
+        .getPropertyValue('--navbar-height')
+        .trim() || '4.5rem';
+      const navH = Number.parseFloat(offset) * (offset.endsWith('rem') ? 16 : 1) || 72;
+      const y = element.getBoundingClientRect().top + window.scrollY - navH - 12;
+      smoothScrollTo(Math.max(0, y));
       setOpen(false);
     }
   };
@@ -132,103 +190,77 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-4 sm:px-6 lg:px-8 py-0 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
+      className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 bg-[rgba(13,13,15,0.85)] backdrop-blur-md border-b border-[var(--border)]"
     >
-      {/* Logo */}
-      <a
-        href="#home"
-        onClick={(e) => handleClick(e, 'home')}
-        className="font-medium text-lg sm:text-xl text-[var(--text)] no-underline tracking-tight cursor-pointer py-4 sm:py-5"
-      >
-        <DecryptText text="DavidNTD" animateOnMount delay={100} />
-      </a>
+      {/* Left: signature logo — back to top of the page */}
+      <div className="flex items-center justify-start min-w-0">
+        <button
+          type="button"
+          onClick={goToTop}
+          title="Back to top"
+          aria-label="Back to top"
+          className="inline-flex items-center py-1 ml-5 sm:ml-9 cursor-pointer bg-transparent border-none transition-opacity hover:opacity-85"
+        >
+          <img
+            src="/images/signature.png"
+            alt={brand}
+            draggable={false}
+            className="h-11 sm:h-14 w-auto select-none brightness-[1.6] drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+          />
+        </button>
+      </div>
 
-      {/* Desktop nav */}
-      <ul className="hidden md:flex items-center gap-12 list-none h-full">
-        {links.map(s => (
-          <li key={s} className="h-full">
-            <SectionNavLink
-              section={s}
-              activeSection={activeSection}
-              onNavigate={handleClick}
-              variant="desktop"
-            />
-          </li>
-        ))}
+      {/* Right: resume CTA + gear settings menu */}
+      <div className="relative flex items-center justify-end gap-2 min-w-0">
+        <a
+          href={resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="navbar-resume"
+          title="Resume"
+        >
+          <Decrypt text="Resume" animateOnMount delay={800} />
+        </a>
 
-        {/* Resume — special CTA button */}
-        <li className="flex items-center">
-          <a
-            href="/Resume/David Nguyen - Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="navbar-resume"
-          >
-            <DecryptReveal animateOnMount delay={550}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="w-4 h-4 shrink-0"
-              >
-                <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-              </svg>
-            </DecryptReveal>
-            <DecryptText text="Resume" animateOnMount delay={600} />
-          </a>
-        </li>
-      </ul>
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          aria-label="Open settings menu"
+          aria-expanded={open}
+          title="Menu"
+          className="inline-flex items-center gap-2 px-3 py-2.5 cursor-pointer border-2 border-[#000] bg-[var(--bg3)] text-[var(--muted)] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),inset_-2px_-2px_0_rgba(0,0,0,0.35)] transition-all duration-150 hover:text-[var(--accent2)] hover:bg-[var(--bg2)] hover:brightness-125"
+        >
+          <Settings size={17} className={`transition-transform duration-300 ${open ? 'rotate-90' : ''}`} />
+          <span className="hidden sm:inline font-pixel text-[0.6rem] uppercase tracking-[0.1em]">
+            Menu
+          </span>
+        </button>
 
-      {/* Mobile hamburger */}
-      <button
-        className="md:hidden flex flex-col gap-[5px] p-1 cursor-pointer bg-transparent border-none"
-        onClick={() => setOpen(!open)}
-        aria-label="Toggle menu"
-      >
-        <span className={`block w-5 h-[2px] bg-[var(--text)] transition-all duration-300 ${open ? 'rotate-45 translate-y-[7px]' : ''}`} />
-        <span className={`block w-5 h-[2px] bg-[var(--text)] transition-all duration-300 ${open ? 'opacity-0' : ''}`} />
-        <span className={`block w-5 h-[2px] bg-[var(--text)] transition-all duration-300 ${open ? '-rotate-45 -translate-y-[7px]' : ''}`} />
-      </button>
+        {/* Dropdown: section navigation + exit to title screen */}
+        {open && (
+          <div className="absolute top-full right-0 mt-2 w-64 sm:w-72 max-h-[calc(100dvh-var(--navbar-height)-2rem)] overflow-y-auto bg-[rgba(13,13,15,0.97)] border-2 border-[#000] shadow-[inset_2px_2px_0_rgba(255,255,255,0.06),inset_-2px_-2px_0_rgba(0,0,0,0.4),0_16px_40px_rgba(0,0,0,0.5)] p-3 flex flex-col gap-1.5">
+            {LINKS.map((link) => (
+              <RetroNavButton
+                key={link.id}
+                link={link}
+                active={activeSection === link.id}
+                onNavigate={handleClick}
+                variant="mobile"
+              />
+            ))}
 
-      {/* Mobile dropdown */}
-      {open && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[rgba(13,13,15,0.97)] border-b border-[var(--border)] flex flex-col gap-2 py-3 max-h-[calc(100dvh-var(--navbar-height))] overflow-y-auto">
-          {links.map(s => (
-            <SectionNavLink
-              key={s}
-              section={s}
-              activeSection={activeSection}
-              onNavigate={handleClick}
-              variant="mobile"
-            />
-          ))}
+            <div className="h-px bg-[var(--border)] my-1.5" />
 
-          {/* Mobile Resume CTA */}
-          <div className="navbar-mobile-resume px-4 sm:px-6 lg:px-8 pb-2">
-            <a
-              href="/Resume/David Nguyen - Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setOpen(false)}
-              className="navbar-resume"
+            <button
+              type="button"
+              onClick={showTitle}
+              className={`${btnBase} w-full text-[var(--danger)] hover:text-[#ffd7d9]`}
             >
-              <DecryptReveal animateOnMount delay={550}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-4 h-4 shrink-0"
-                >
-                  <path d="M10.75 2.75a.75.75 0 0 0-1.5 0v8.614L6.295 8.235a.75.75 0 1 0-1.09 1.03l4.25 4.5a.75.75 0 0 0 1.09 0l4.25-4.5a.75.75 0 0 0-1.09-1.03l-2.955 3.129V2.75Z" />
-                  <path d="M3.5 12.75a.75.75 0 0 0-1.5 0v2.5A2.75 2.75 0 0 0 4.75 18h10.5A2.75 2.75 0 0 0 18 15.25v-2.5a.75.75 0 0 0-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5Z" />
-                </svg>
-              </DecryptReveal>
-              <DecryptText text="Resume" animateOnMount delay={600} />
-            </a>
+              <Decrypt text="Exit to Title" animateOnMount delay={900} />
+            </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </nav>
   );
 }

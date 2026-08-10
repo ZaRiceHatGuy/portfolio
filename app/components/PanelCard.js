@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import Decrypt from './Decrypt';
 
 export const PanelCard = forwardRef(function PanelCard({ children, className = '', hover = true }, ref) {
   return (
@@ -10,7 +11,7 @@ export const PanelCard = forwardRef(function PanelCard({ children, className = '
           : ''
       } ${className}`}
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent2)] to-transparent opacity-80" />
+      <div className="absolute inset-x-0 top-0 h-[3px] bg-[var(--accent2)]" />
       {children}
     </div>
   );
@@ -18,8 +19,8 @@ export const PanelCard = forwardRef(function PanelCard({ children, className = '
 
 export function PanelLabel({ children }) {
   return (
-    <p className="text-[0.65rem] uppercase tracking-[0.14em] text-[var(--muted)] mb-3">
-      {children}
+    <p className="font-pixel text-[0.9rem] uppercase tracking-[0.08em] text-[var(--muted)] mb-2.5">
+      <Decrypt text={children} />
     </p>
   );
 }
@@ -34,57 +35,60 @@ const BADGE_VARIANTS = {
 export function MetaBadge({ children, variant = 'default', className = '' }) {
   return (
     <span
-      className={`inline-flex text-[0.65rem] uppercase tracking-wide px-2 py-0.5 rounded border max-w-full ${BADGE_VARIANTS[variant]} ${className}`}
+      className={`inline-flex font-pixel text-[0.55rem] uppercase tracking-wide px-2 py-1 border max-w-full ${BADGE_VARIANTS[variant]} ${className}`}
     >
-      {children}
+      <Decrypt text={children} />
     </span>
   );
 }
 
-export function MetaRow({ label, children }) {
+export function Chip({ children, className = '', style }) {
   return (
-    <div className="flex items-center justify-between gap-2 py-1.5 border-b border-[var(--border)] last:border-0">
-      <span className="text-[0.65rem] text-[var(--muted)] shrink-0">{label}</span>
-      <span className="text-xs text-white text-right">{children}</span>
-    </div>
-  );
-}
-
-export function Chip({ children }) {
-  return (
-    <span className="text-[0.65rem] px-2 py-1 rounded-md border border-[var(--border)] bg-[var(--bg3)] text-[var(--text)] transition-colors duration-200 hover:border-[var(--accent2)] hover:text-[var(--accent2)]">
-      {children}
+    <span
+      style={style}
+      className={`font-pixel pixel-border text-[0.65rem] px-2 py-1 bg-[var(--bg3)] text-[var(--text)] transition-colors duration-200 hover:border-[var(--accent2)] hover:text-[var(--accent2)] ${className}`}
+    >
+      {typeof children === 'string' ? <Decrypt text={children} /> : children}
     </span>
   );
 }
 
 export function GpaDisplay({ value, max = 4.0 }) {
   const pct = Math.min(100, (value / max) * 100);
+  const blocks = 20;
+  const filled = Math.round((pct / 100) * blocks);
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--bg3)] p-3">
-      <div className="flex items-end justify-between gap-3 mb-3">
+    <div className="border-2 border-[#000] bg-[var(--bg3)] p-2.5 shadow-[inset_2px_2px_0_rgba(255,255,255,0.12),inset_-2px_-2px_0_rgba(0,0,0,0.3)]">
+      <div className="flex items-end justify-between gap-3 mb-2.5">
         <div>
-          <p className="text-[0.65rem] uppercase tracking-[0.14em] text-[var(--muted)] mb-1">GPA</p>
-          <p className="text-2xl text-white font-medium tabular-nums leading-none">
-            {value}
-            <span className="text-sm text-[var(--muted)] font-normal"> / {max.toFixed(1)}</span>
+          <Decrypt
+            text="GPA"
+            as="p"
+            className="font-pixel text-[0.55rem] uppercase tracking-[0.1em] text-[var(--muted)] mb-1"
+          />
+          <p className="text-2xl text-white leading-none">
+            <Decrypt text={String(value)} />
+            <span className="text-sm text-[var(--muted)]"> / {max.toFixed(1)}</span>
           </p>
         </div>
-        <span className="text-[0.65rem] uppercase tracking-wide px-2 py-0.5 rounded border text-[var(--accent)] border-[rgba(var(--accent-rgb),0.45)] bg-[rgba(var(--accent-rgb),0.12)]">
-          {Math.round(pct)}%
-        </span>
-      </div>
-      <div className="h-2 rounded-full bg-[var(--card)] overflow-hidden border border-[var(--border)]">
-        <div
-          className="h-full rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)]"
-          style={{ width: `${pct}%` }}
+        <Decrypt
+          text={`${Math.round(pct)}%`}
+          as="span"
+          className="font-pixel text-[0.55rem] uppercase tracking-wide px-2 py-1 border-2 border-[#000] text-[var(--accent)] bg-[rgba(var(--accent-rgb),0.12)]"
         />
       </div>
+      <div className="flex gap-[2px] h-3 bg-[var(--card)] border border-[#000] p-[2px] overflow-hidden">
+        {Array.from({ length: blocks }).map((_, i) => (
+          <span
+            key={i}
+            className={`flex-1 ${i < filled ? 'bg-[var(--hp)]' : 'bg-[#0b0b1a]'}`}
+          />
+        ))}
+      </div>
       <div className="flex justify-between mt-1.5 px-0.5">
-        <span className="text-[0.55rem] text-[var(--muted)] tabular-nums">0.0</span>
-        <span className="text-[0.55rem] text-[var(--muted)] tabular-nums">2.0</span>
-        <span className="text-[0.55rem] text-[var(--muted)] tabular-nums">3.0</span>
-        <span className="text-[0.55rem] text-[var(--muted)] tabular-nums">4.0</span>
+        {['0.0', '2.0', '3.0', '4.0'].map((v) => (
+          <Decrypt key={v} text={v} className="text-[0.6rem] text-[var(--muted)]" />
+        ))}
       </div>
     </div>
   );

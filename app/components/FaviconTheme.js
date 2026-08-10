@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 
-const LIGHT_ICON = '/images/favicon-light.png';
-const DARK_ICON = '/images/favicon-dark.png';
+const LIGHT_ICON = '/images/favicon-light.png?v=6';
+const DARK_ICON = '/images/favicon-dark.png?v=6';
 
 function applyFavicon(isDark) {
   const href = isDark ? DARK_ICON : LIGHT_ICON;
@@ -13,7 +13,7 @@ function applyFavicon(isDark) {
     link = document.createElement('link');
     link.rel = 'icon';
     link.type = 'image/png';
-    link.sizes = '32x32';
+    link.sizes = '512x512';
     link.setAttribute('data-favicon-theme', 'true');
     document.head.appendChild(link);
   }
