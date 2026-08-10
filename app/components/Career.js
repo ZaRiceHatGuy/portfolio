@@ -29,7 +29,7 @@ export const DEFAULT_ITEMS = [
   },
   {
     "category": "Activities",
-    "role": "MegaHacks Hackathon",
+    "role": "MegaByte Hackathon",
     "org": "MegaHacks",
     "location": "Calgary, Alberta, Canada",
     "period": "January 2026",
