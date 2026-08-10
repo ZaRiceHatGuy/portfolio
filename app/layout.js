@@ -1,6 +1,22 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 import FaviconTheme from "./components/FaviconTheme";
+
+// Same local-admin fallback as app/page.js: use the locally-edited content
+// when present, otherwise the site's built-in values.
+async function getLocalContent() {
+  try {
+    const raw = await readFile(
+      path.join(process.cwd(), "app", "admin", "data", "content.json"),
+      "utf8"
+    );
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 const pressStart = Press_Start_2P({
   weight: "400",
@@ -21,9 +37,11 @@ export const viewport = {
 };
 
 export async function generateMetadata() {
+  const content = await getLocalContent();
   return {
-    title: "DavidNTD",
+    title: content?.profile?.brand ?? "DavidNTD",
     description:
+      content?.profile?.intro ??
       "Frontend-Focused Full-Stack Developer\nBuilding modern web applications with Next.js and React, with a growing focus on backend development, AI, and embedded systems.",
     icons: {
       icon: {
