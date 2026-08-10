@@ -17,7 +17,7 @@ export const DEFAULT_CONTACT = {
   "email": "davidnguyen107206@gmail.com",
   "github": "https://github.com/ZaRiceHatGuy",
   "linkedin": "http://www.linkedin.com/in/davidntd",
-  "resumeUrl": "/Resume/David Nguyen - Resume.pdf",
+  "resumeUrl": "/Resume/David-Nguyen---CV-Resume.pdf",
   "profileImage": "/profile/profile.jpg",
   "status": "open to work/opportunities in IT and software"
 };
