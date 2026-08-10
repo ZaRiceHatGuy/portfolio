@@ -1,4 +1,4 @@
-import { getContent } from "./lib/site-content";
+import content from "./data/content.json";
 import Navbar from "./components/Navbar";
 import Intro from "./components/Intro";
 import Foundation from "./components/Foundation";
@@ -6,16 +6,13 @@ import Career from "./components/Career";
 import Tech from "./components/Tech";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
-import VisitTracker from "@admin/VisitTracker";
 import StartScreen from "./components/StartScreen";
 import CosmicBackground from "./components/CosmicBackground";
 
 export default async function Home() {
-  const content = await getContent();
   const tagline = content.profile.intro.split("\n")[0];
   return (
     <>
-      <VisitTracker />
       <CosmicBackground />
       <StartScreen brand={content.profile.brand} tagline={tagline}>
         <Navbar brand={content.profile.brand} resumeUrl={content.profile.resumeUrl} />

@@ -1,7 +1,7 @@
 import { Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 import FaviconTheme from "./components/FaviconTheme";
-import { getContent } from "./lib/site-content";
+import content from "./data/content.json";
 
 const pressStart = Press_Start_2P({
   weight: "400",
@@ -22,7 +22,6 @@ export const viewport = {
 };
 
 export async function generateMetadata() {
-  const content = await getContent();
   return {
     title: content.profile.brand,
     description: content.profile.intro,

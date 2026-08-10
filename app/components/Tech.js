@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { MousePointer2 } from 'lucide-react';
 import Decrypt from './Decrypt';
 import Reveal from './Reveal';
@@ -83,7 +83,7 @@ function SkillsBlock({ groups = [] }) {
 
   return (
     <div className="w-full overflow-visible">
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 pt-3.5 overflow-visible">
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 pt-3.5 overflow-x-clip">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-6 overflow-visible">
           {groups.map((group, groupIdx) => (
             <Reveal
@@ -117,6 +117,24 @@ function SkillsBlock({ groups = [] }) {
 
 function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
   const prof = PROFICIENCY[skill.level] || PROFICIENCY.Intermediate;
+  const tipRef = useRef(null);
+
+  // On mobile, active tooltips for badges in the edge columns can poke past
+  // the viewport. Clamp the tooltip horizontally so it stays fully on screen.
+  useLayoutEffect(() => {
+    const el = tipRef.current;
+    if (!el || !window.matchMedia('(max-width: 767px)').matches) return;
+    if (!isActive) {
+      el.style.translate = '';
+      return;
+    }
+    const r = el.getBoundingClientRect();
+    const margin = 16;
+    let shift = 0;
+    if (r.right > window.innerWidth - margin) shift = window.innerWidth - margin - r.right;
+    if (r.left < margin) shift = Math.max(shift, margin - r.left);
+    el.style.translate = shift ? `calc(-50% + ${shift}px) 0` : '';
+  }, [isActive]);
 
   return (      <div
         data-skill-badge
@@ -153,6 +171,7 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
       </Decrypt>
 
       <div
+        ref={tipRef}
         className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[172px] w-max max-w-[220px] transition-all duration-300 max-md:pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
           isActive ? 'max-md:opacity-100 max-md:translate-y-0' : 'max-md:opacity-0 max-md:translate-y-1'
         }`}
