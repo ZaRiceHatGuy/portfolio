@@ -3,15 +3,16 @@ import { PanelCard, PanelLabel, MetaBadge, GpaDisplay, Chip } from "./PanelCard"
 import Reveal from "./Reveal";
 import { Section } from "./SectionTitle";
 
-const DEFAULT_EDUCATION = [
+// @sync-start education
+export const DEFAULT_EDUCATION = [
   {
-    degree: "Software Development Diploma",
-    school: "SAIT (Southern Alberta Institute of Technology)",
-    year: "2024 - 2026",
-    gpa: 3.8,
-    status: "Completed",
-    statusVariant: "accent",
-    coursework: [
+    "degree": "Software Development Diploma",
+    "school": "SAIT (Southern Alberta Institute of Technology)",
+    "year": "2024 - 2026",
+    "gpa": 3.8,
+    "status": "Completed",
+    "statusVariant": "accent",
+    "coursework": [
       "Object-Oriented Programming",
       "Web Development",
       "Mobile Application Development",
@@ -19,32 +20,55 @@ const DEFAULT_EDUCATION = [
       "Cloud Computing",
       "Software Security",
       "Software Testing and Deployment",
-      "Software Projects: Analysis, Design, and Management",
-    ],
+      "Software Projects: Analysis, Design, and Management"
+    ]
   },
   {
-    degree: "Integrated Artificial Intelligence Post-Diploma Certificate",
-    school: "SAIT (Southern Alberta Institute of Technology)",
-    year: "2026 - 2027",
-    gpa: null,
-    status: "Upcoming",
-    statusVariant: "yellow",
-    coursework: [],
-  },
+    "degree": "Integrated Artificial Intelligence Post-Diploma Certificate",
+    "school": "SAIT (Southern Alberta Institute of Technology)",
+    "year": "2026 - 2027",
+    "gpa": null,
+    "status": "Upcoming",
+    "statusVariant": "yellow",
+    "coursework": []
+  }
 ];
+// @sync-end
 
-const DEFAULT_AWARDS = [
+// @sync-start awards
+export const DEFAULT_AWARDS = [
   {
-    name: "Team Award for Leadership, Resilience, and Community-Building",
-    issuer: "Centennial High School Award",
-    year: "2024",
-    type: "Award",
+    "name": "Team Award for Leadership, Resilience, and Community-Building",
+    "issuer": "Centennial High School Award",
+    "year": "2024",
+    "type": "Award"
   },
-  { name: "Schulich Ignite", issuer: "University of Calgary", year: "2022", type: "ProgramCert" },
-  { name: "Git Essential Training", issuer: "LinkedIn Learning", year: "2024", type: "Certificate" },
-  { name: "Learning Git & GitHub (2021)", issuer: "LinkedIn Learning", year: "2024", type: "Certificate" },
-  { name: "Acadium Apprenticeship", issuer: "Acadium", year: "2026", type: "Certificate" },
+  {
+    "name": "Schulich Ignite",
+    "issuer": "University of Calgary",
+    "year": "2022",
+    "type": "ProgramCert"
+  },
+  {
+    "name": "Git Essential Training",
+    "issuer": "LinkedIn Learning",
+    "year": "2024",
+    "type": "Certificate"
+  },
+  {
+    "name": "Learning Git & GitHub (2021)",
+    "issuer": "LinkedIn Learning",
+    "year": "2024",
+    "type": "Certificate"
+  },
+  {
+    "name": "Acadium Apprenticeship",
+    "issuer": "Acadium",
+    "year": "2026",
+    "type": "Certificate"
+  }
 ];
+// @sync-end
 
 const TYPE_VARIANT = {
   Award: "yellow",

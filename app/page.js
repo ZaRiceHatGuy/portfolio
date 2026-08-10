@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import Navbar from "./components/Navbar";
-import Intro from "./components/Intro";
+import Intro, { DEFAULT_PROFILE } from "./components/Intro";
 import Foundation from "./components/Foundation";
 import Career from "./components/Career";
 import Tech from "./components/Tech";
@@ -29,16 +29,14 @@ async function getLocalContent() {
 
 export default async function Home() {
   const content = await getLocalContent();
-  const profile = content?.profile;
-  const tagline = profile?.intro?.split("\n")[0] ?? "Frontend-Focused Full-Stack Developer";
+  // Local admin edits win in dev; otherwise the site's built-in content.
+  const profile = content?.profile ?? DEFAULT_PROFILE;
+  const tagline = profile.intro.split("\n")[0];
   return (
     <>
       <CosmicBackground />
-      <StartScreen brand={profile?.brand ?? "DavidNTD"} tagline={tagline}>
-        <Navbar
-          brand={profile?.brand ?? "DavidNTD"}
-          resumeUrl={profile?.resumeUrl ?? "/Resume/David Nguyen - Resume.pdf"}
-        />
+      <StartScreen brand={profile.brand} tagline={tagline}>
+        <Navbar brand={profile.brand} resumeUrl={profile.resumeUrl} />
         <main className="relative z-10">
           <Intro profile={profile} about={content?.about} />
           <Foundation education={content?.education} awards={content?.awards} />

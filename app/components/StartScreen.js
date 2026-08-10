@@ -26,17 +26,47 @@ export default function StartScreen({ brand, tagline, children }) {
   const [bannerGone, setBannerGone] = useState(false);
   const startedRef = useRef(false);
 
+  // Remember the scroll position so a refresh can land back where the user
+  // was once the boot screen is dismissed, instead of always the top.
+  useEffect(() => {
+    try {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    } catch {}
+    const onScroll = () => {
+      try {
+        sessionStorage.setItem("fb:scroll", String(window.scrollY));
+      } catch {}
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const start = useCallback(() => {
     if (startedRef.current) return;
     startedRef.current = true;
+    // Restore the pre-refresh scroll position once the boot screen fades out
+    // and the scroll lock lifts (phase becomes "game" at 500ms).
+    let savedScroll = 0;
+    try {
+      savedScroll = Number(sessionStorage.getItem("fb:scroll") || 0);
+      sessionStorage.removeItem("fb:scroll");
+    } catch {}
     // Remount the site so its entrance animations replay on every start.
     setRunId((n) => n + 1);
     setBanner(true);
     setBannerGone(false);
     setPhase("leaving");
+    if (savedScroll > 0) {
+      setTimeout(() => window.scrollTo(0, savedScroll), 550);
+    }
   }, []);
 
   const showTitle = useCallback(() => {
+    // Exiting to the title screen is an explicit "start over" — drop the
+    // saved scroll so the next start lands at the top.
+    try {
+      sessionStorage.removeItem("fb:scroll");
+    } catch {}
     window.scrollTo(0, 0);
     startedRef.current = false;
     setPhase("boot");

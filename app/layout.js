@@ -3,6 +3,7 @@ import path from "node:path";
 import { Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 import FaviconTheme from "./components/FaviconTheme";
+import { DEFAULT_PROFILE } from "./components/Intro";
 
 // Same local-admin fallback as app/page.js: use the locally-edited content
 // when present, otherwise the site's built-in values.
@@ -39,10 +40,8 @@ export const viewport = {
 export async function generateMetadata() {
   const content = await getLocalContent();
   return {
-    title: content?.profile?.brand ?? "DavidNTD",
-    description:
-      content?.profile?.intro ??
-      "Frontend-Focused Full-Stack Developer\nBuilding modern web applications with Next.js and React, with a growing focus on backend development, AI, and embedded systems.",
+    title: content?.profile?.brand ?? DEFAULT_PROFILE.brand,
+    description: content?.profile?.intro ?? DEFAULT_PROFILE.intro,
     icons: {
       icon: {
         url: "/images/favicon-light.png?v=6",

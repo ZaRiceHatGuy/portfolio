@@ -6,40 +6,110 @@ import Decrypt from './Decrypt';
 import Reveal from './Reveal';
 import { Section } from './SectionTitle';
 
-const DEFAULT_GROUPS = [
+// @sync-start groups
+export const DEFAULT_GROUPS = [
   {
-    label: 'Languages & data',
-    skills: [
-      { name: 'C', icon: '/icons/C.svg', level: 'Intermediate' },
-      { name: 'C++', icon: '/icons/CPP.svg', level: 'Basic' },
-      { name: 'C#', icon: '/icons/CSharp.svg', level: 'Intermediate' },
-      { name: 'Java', icon: '/icons/Java.svg', level: 'Basic' },
-      { name: 'Python', icon: '/icons/Python.svg', level: 'Proficient' },
-      { name: 'HTML', icon: '/icons/HTML.svg', level: 'Proficient' },
-      { name: 'CSS', icon: '/icons/CSS.svg', level: 'Proficient' },
-      { name: 'JavaScript', icon: '/icons/JavaScript.svg', level: 'Proficient' },
-      { name: 'TypeScript', icon: '/icons/TypeScript.svg', level: 'Intermediate' },
-      { name: 'PostgreSQL', icon: '/icons/PostgreSQL.svg', level: 'Intermediate' },
-    ],
+    "label": "Languages & data",
+    "skills": [
+      {
+        "name": "C",
+        "icon": "/icons/C.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "C++",
+        "icon": "/icons/CPP.svg",
+        "level": "Basic"
+      },
+      {
+        "name": "C#",
+        "icon": "/icons/CSharp.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Java",
+        "icon": "/icons/Java.svg",
+        "level": "Basic"
+      },
+      {
+        "name": "Python",
+        "icon": "/icons/Python.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "HTML",
+        "icon": "/icons/HTML.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "CSS",
+        "icon": "/icons/CSS.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "JavaScript",
+        "icon": "/icons/JavaScript.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "TypeScript",
+        "icon": "/icons/TypeScript.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "/icons/PostgreSQL.svg",
+        "level": "Intermediate"
+      }
+    ]
   },
   {
-    label: 'Frameworks',
-    skills: [
-      { name: 'React', icon: '/icons/React.svg', level: 'Proficient' },
-      { name: 'Next.js', icon: '/icons/NextJS.svg', level: 'Proficient' },
-      { name: 'Node.js', icon: '/icons/NodeJS.svg', level: 'Intermediate' },
-    ],
+    "label": "Frameworks",
+    "skills": [
+      {
+        "name": "React",
+        "icon": "/icons/React.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "Next.js",
+        "icon": "/icons/NextJS.svg",
+        "level": "Proficient"
+      },
+      {
+        "name": "Node.js",
+        "icon": "/icons/NodeJS.svg",
+        "level": "Intermediate"
+      }
+    ]
   },
   {
-    label: 'Tools & platforms',
-    skills: [
-      { name: 'Git', icon: '/icons/Git.svg', level: 'Intermediate' },
-      { name: 'Vercel', icon: '/icons/Vercel.svg', level: 'Intermediate' },
-      { name: 'Framer', icon: '/icons/Framer.svg', level: 'Intermediate' },
-      { name: 'Supabase', icon: '/icons/Supabase.svg', level: 'Intermediate' },
-    ],
-  },
+    "label": "Tools & platforms",
+    "skills": [
+      {
+        "name": "Git",
+        "icon": "/icons/Git.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Vercel",
+        "icon": "/icons/Vercel.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Framer",
+        "icon": "/icons/Framer.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "Supabase",
+        "icon": "/icons/Supabase.svg",
+        "level": "Intermediate"
+      }
+    ]
+  }
 ];
+// @sync-end
 
 const PROFICIENCY = {
   Basic: {

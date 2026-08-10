@@ -4,40 +4,42 @@ import Decrypt from './Decrypt';
 import Reveal from './Reveal';
 import { Section } from './SectionTitle';
 
-const DEFAULT_ITEMS = [
+// @sync-start projects
+export const DEFAULT_ITEMS = [
   {
-    name: 'HomeFull',
-    desc: 'Full-stack web application connecting homeless individuals with job opportunities. Features search and filtering by city, skill, and shelter for improved job accessibility.',
-    github: 'https://github.com/Haedyn06/Project-HomeFull.git',
-    live: 'https://project-homefull.vercel.app/',
-    image: null,
-    video: null,
+    "name": "HomeFull",
+    "desc": "Full-stack web application connecting homeless individuals with job opportunities. Features search and filtering by city, skill, and shelter for improved job accessibility.",
+    "github": "https://github.com/Haedyn06/Project-HomeFull.git",
+    "live": "https://project-homefull.vercel.app/",
+    "image": null,
+    "video": null
   },
   {
-    name: 'Village Rental',
-    desc: 'Desktop application for rental management with CRUD operations across a 5-table relational database. Features real-time cost calculations and an interactive reporting dashboard.',
-    github: 'https://github.com/ZaRiceHatGuy/VillageRental.git',
-    live: null,
-    image: null,
-    video: null,
+    "name": "Village Rental",
+    "desc": "Desktop application for rental management with CRUD operations across a 5-table relational database. Features real-time cost calculations and an interactive reporting dashboard.",
+    "github": "https://github.com/ZaRiceHatGuy/VillageRental.git",
+    "live": null,
+    "image": null,
+    "video": null
   },
   {
-    name: 'Quadratic Solver',
-    desc: 'Interactive GUI application for solving quadratic equations with real-time graphing. Supports linear, quadratic, and complex root cases with adjustable axis ranges.',
-    github: 'https://github.com/ZaRiceHatGuy/Quadratic-Calculator.git',
-    live: null,
-    image: null,
-    video: null,
+    "name": "Quadratic Solver",
+    "desc": "Interactive GUI application for solving quadratic equations with real-time graphing. Supports linear, quadratic, and complex root cases with adjustable axis ranges.",
+    "github": "https://github.com/ZaRiceHatGuy/Quadratic-Calculator.git",
+    "live": null,
+    "image": null,
+    "video": null
   },
   {
-    name: 'PingPongPyGame',
-    desc: 'Classic arcade game built with Python and Pygame. Features real-time input handling, collision detection, randomized ball direction, and physics-based ball-paddle mechanics.',
-    github: 'https://github.com/ZaRiceHatGuy/PingPongPyGame.git',
-    live: null,
-    image: null,
-    video: null,
-  },
+    "name": "PingPongPyGame",
+    "desc": "Classic arcade game built with Python and Pygame. Features real-time input handling, collision detection, randomized ball direction, and physics-based ball-paddle mechanics.",
+    "github": "https://github.com/ZaRiceHatGuy/PingPongPyGame.git",
+    "live": null,
+    "image": null,
+    "video": null
+  }
 ];
+// @sync-end
 
 function ProjectLink({ href, children }) {
   return (
