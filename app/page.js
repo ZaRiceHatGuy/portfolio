@@ -1,4 +1,3 @@
-import content from "./data/content.json";
 import Navbar from "./components/Navbar";
 import Intro from "./components/Intro";
 import Foundation from "./components/Foundation";
@@ -7,23 +6,19 @@ import Tech from "./components/Tech";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import StartScreen from "./components/StartScreen";
-import CosmicBackground from "./components/CosmicBackground";
-
-export default async function Home() {
-  const tagline = content.profile.intro.split("\n")[0];
+import CosmicBackground from "./components/CosmicBackground";export default async function Home() {
   return (
     <>
       <CosmicBackground />
-      <StartScreen brand={content.profile.brand} tagline={tagline}>
-        <Navbar brand={content.profile.brand} resumeUrl={content.profile.resumeUrl} />
-
+      <StartScreen brand="DavidNTD" tagline="Frontend-Focused Full-Stack Developer">
+        <Navbar brand="DavidNTD" resumeUrl="/Resume/David Nguyen - Resume.pdf" />
         <main className="relative z-10">
-          <Intro profile={content.profile} about={content.about} />
-          <Foundation education={content.education} awards={content.awards} />
-          <Career items={content.career} />
-          <Tech groups={content.skills.groups} />
-          <Projects items={content.projects} />
-          <Contact contact={content.profile} footerText={content.footer} />
+          <Intro />
+          <Foundation />
+          <Career />
+          <Tech />
+          <Projects />
+          <Contact />
         </main>
       </StartScreen>
     </>

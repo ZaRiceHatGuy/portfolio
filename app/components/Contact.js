@@ -7,6 +7,23 @@ import { PanelCard, PanelLabel } from "./PanelCard";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 
+const DEFAULT_CONTACT = {
+  brand: "DavidNTD",
+  displayName: "David Nguyen",
+  intro:
+    "Frontend-Focused Full-Stack Developer\nBuilding modern web applications with Next.js and React, with a growing focus on backend development, AI, and embedded systems.\n",
+  location: "Calgary, AB, Canada",
+  phone: "+1 (403) 827-2659",
+  email: "davidnguyen107206@gmail.com",
+  github: "https://github.com/ZaRiceHatGuy",
+  linkedin: "http://www.linkedin.com/in/davidntd",
+  resumeUrl: "/Resume/David Nguyen - Resume.pdf",
+  profileImage: "/profile/profile.jpg",
+  status: "open to work/opportunities in IT and software",
+};
+
+const DEFAULT_FOOTER = "© 2026 Thái Dương (David) Nguyễn. Designed & built with care.";
+
 // Same brand icons as the profile card.
 const GitHubIcon = ({ size = 19 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -208,7 +225,7 @@ function Footer({ text }) {
  * Contact — the full-screen contact section (contact links + form) with the
  * site footer beneath it.
  */
-export default function Contact({ contact, footerText }) {
+export default function Contact({ contact = DEFAULT_CONTACT, footerText = DEFAULT_FOOTER }) {
   return (
     <div id="contact" className="flex flex-col">
       <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">

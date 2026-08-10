@@ -3,6 +3,42 @@ import { PanelCard } from './PanelCard';
 import Reveal from './Reveal';
 import { Section } from './SectionTitle';
 
+const DEFAULT_ITEMS = [
+  {
+    category: 'Experience',
+    org: 'Frontier Industries',
+    location: 'London, England, UK (Remote)',
+    role: 'Web Designer/Developer Apprentice',
+    period: 'Apr 2026 - Jul 2026',
+    bullets: [
+      'Audited the existing site, documented findings, and built a full redesign from scratch aligned with the existing brand structure.',
+      "Learned Framer and TypeScript to develop custom code components, enabling more flexible and dynamic UI within Framer's environment.",
+    ],
+  },
+  {
+    category: 'Activities',
+    org: 'Centennial High School Band',
+    location: 'Calgary, Alberta, Canada',
+    role: 'Section Leader - Percussion',
+    period: 'Sep 2023 - Jun 2024',
+    bullets: [
+      'Led weekly rehearsals for a percussion section with a total of 11 members and mentored 8 junior members throughout the school year.',
+      'Ensured the group follows the conductor and stays on track with the rest of the band during rehearsals and concert performances.',
+    ],
+  },
+  {
+    category: 'Activities',
+    role: 'MegaHacks Hackathon',
+    org: 'MegaHacks',
+    location: 'Calgary, Alberta, Canada',
+    period: 'January 2026',
+    bullets: [
+      'Job-matching platform connecting shelter residents with local businesses offering employment opportunities, built in 2 days',
+      'Contributed frontend pages as part of a small team under tight hackathon constraints',
+    ],
+  },
+];
+
 function CareerEntries({ items }) {
   return (
     <div className="h-full min-w-0">
@@ -50,7 +86,7 @@ function CareerEntries({ items }) {
  * leadership, activities). Each entry is its own card, titled by its
  * category, with company left / location right and role left / period right.
  */
-export default function Career({ items = [] }) {
+export default function Career({ items = DEFAULT_ITEMS }) {
   return (
     <Section id="experience" title="Career Log">
       <CareerEntries items={items} />

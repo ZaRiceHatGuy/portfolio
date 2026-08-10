@@ -3,6 +3,31 @@ import { PanelCard, PanelLabel, Chip } from "./PanelCard";
 import Reveal from "./Reveal";
 import SectionTitle from "./SectionTitle";
 
+const DEFAULT_PROFILE = {
+  brand: "DavidNTD",
+  displayName: "David Nguyen",
+  intro:
+    "Frontend-Focused Full-Stack Developer\nBuilding modern web applications with Next.js and React, with a growing focus on backend development, AI, and embedded systems.\n",
+  location: "Calgary, AB, Canada",
+  phone: "+1 (403) 827-2659",
+  email: "davidnguyen107206@gmail.com",
+  github: "https://github.com/ZaRiceHatGuy",
+  linkedin: "http://www.linkedin.com/in/davidntd",
+  resumeUrl: "/Resume/David Nguyen - Resume.pdf",
+  profileImage: "/profile/profile.jpg",
+  status: "open to work/opportunities in IT and software",
+};
+
+const DEFAULT_ABOUT = {
+  paragraphs: [
+    "Hello, my name is Thai Duong Nguyen, commonly known as David. I'm a Software Development graduate from SAIT and a full-stack developer specializing in frontend development. I began programming in high school with Python and Lua, then expanded into robotics with Arduino and C++, and now build modern web applications using React, Next.js, Supabase, and PostgreSQL.",
+    "I’m proficient in Python, C, HTML/CSS, and JavaScript, with working knowledge of TypeScript, C#, and SQL/PostgreSQL, plus basic C++ and Java. I’m also exploring ESP32 systems and how software, hardware, automation, and AI can work together, with a long-term goal of building intelligent systems inspired by JARVIS from Iron Man.",
+    "Outside of technology, I enjoy playing piano and chess, and exploring history and astronomy. I value both independent work and collaboration, and I’m always eager to learn, build, and take on new challenges. I’m open to opportunities in software development, IT, and related technical fields.",
+  ],
+  strengths: ["Teamwork", "Technical communication", "Mentorship", "Problem-solving", "Analytical thinking"],
+  languages: ["English", "Vietnamese"],
+};
+
 const fieldLabelClass =
   "font-pixel text-[0.6rem] uppercase tracking-[0.1em] text-[var(--muted)] shrink-0";
 
@@ -90,7 +115,7 @@ function AboutCard({ about: { paragraphs } }) {
  * profile card (portrait, Name/Role/Status, Strengths/Languages) and the
  * About Me card, on top of the page-wide cosmic background.
  */
-export default function Intro({ profile, about }) {
+export default function Intro({ profile = DEFAULT_PROFILE, about = DEFAULT_ABOUT }) {
   return (
     <div
       id="home"

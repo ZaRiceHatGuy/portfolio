@@ -1,7 +1,6 @@
 import { Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 import FaviconTheme from "./components/FaviconTheme";
-import content from "./data/content.json";
 
 const pressStart = Press_Start_2P({
   weight: "400",
@@ -23,8 +22,9 @@ export const viewport = {
 
 export async function generateMetadata() {
   return {
-    title: content.profile.brand,
-    description: content.profile.intro,
+    title: "DavidNTD",
+    description:
+      "Frontend-Focused Full-Stack Developer\nBuilding modern web applications with Next.js and React, with a growing focus on backend development, AI, and embedded systems.",
     icons: {
       icon: {
         url: "/images/favicon-light.png?v=6",

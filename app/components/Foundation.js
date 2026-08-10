@@ -3,6 +3,49 @@ import { PanelCard, PanelLabel, MetaBadge, GpaDisplay, Chip } from "./PanelCard"
 import Reveal from "./Reveal";
 import { Section } from "./SectionTitle";
 
+const DEFAULT_EDUCATION = [
+  {
+    degree: "Software Development Diploma",
+    school: "SAIT (Southern Alberta Institute of Technology)",
+    year: "2024 - 2026",
+    gpa: 3.8,
+    status: "Completed",
+    statusVariant: "accent",
+    coursework: [
+      "Object-Oriented Programming",
+      "Web Development",
+      "Mobile Application Development",
+      "Database Programming",
+      "Cloud Computing",
+      "Software Security",
+      "Software Testing and Deployment",
+      "Software Projects: Analysis, Design, and Management",
+    ],
+  },
+  {
+    degree: "Integrated Artificial Intelligence Post-Diploma Certificate",
+    school: "SAIT (Southern Alberta Institute of Technology)",
+    year: "2026 - 2027",
+    gpa: null,
+    status: "Upcoming",
+    statusVariant: "yellow",
+    coursework: [],
+  },
+];
+
+const DEFAULT_AWARDS = [
+  {
+    name: "Team Award for Leadership, Resilience, and Community-Building",
+    issuer: "Centennial High School Award",
+    year: "2024",
+    type: "Award",
+  },
+  { name: "Schulich Ignite", issuer: "University of Calgary", year: "2022", type: "ProgramCert" },
+  { name: "Git Essential Training", issuer: "LinkedIn Learning", year: "2024", type: "Certificate" },
+  { name: "Learning Git & GitHub (2021)", issuer: "LinkedIn Learning", year: "2024", type: "Certificate" },
+  { name: "Acadium Apprenticeship", issuer: "Acadium", year: "2026", type: "Certificate" },
+];
+
 const TYPE_VARIANT = {
   Award: "yellow",
   ProgramCert: "accent",
@@ -74,7 +117,7 @@ function AwardCard({ item }) {
  * Foundation — the Education (left) and Awards & Certifications (right)
  * columns. Every degree and award is its own card under its column label.
  */
-export default function Foundation({ education = [], awards = [] }) {
+export default function Foundation({ education = DEFAULT_EDUCATION, awards = DEFAULT_AWARDS }) {
   return (
     <Section id="about" title="Foundations">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
