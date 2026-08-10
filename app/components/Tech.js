@@ -135,9 +135,9 @@ const HEADER_CARD_CLASS =
 export function HintCard() {
   return (
     <div
-      className={`${HEADER_CARD_CLASS} flex items-center gap-2 text-[0.65rem] sm:text-[0.7rem] text-[var(--muted)] border-dashed border-[var(--border)] bg-[var(--bg3)] w-full lg:w-auto lg:max-w-fit`}
+      className={`${HEADER_CARD_CLASS} flex items-center gap-2 text-xs sm:text-[0.8rem] text-[var(--muted)] border-dashed border-[var(--border)] bg-[var(--bg3)] w-full lg:w-auto lg:max-w-fit`}
     >
-      <MousePointer2 size={14} className="text-[var(--accent2)] shrink-0 animate-pulse" />
+      <MousePointer2 size={16} className="text-[var(--accent2)] shrink-0 animate-pulse" />
       <span className="md:hidden">
         <Decrypt text="Tap any icon for name & proficiency" />
       </span>
@@ -154,11 +154,11 @@ export function LegendCard() {
 
   return (
     <div
-      className={`${HEADER_CARD_CLASS} flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.65rem] border-[var(--border)] bg-[var(--bg3)] w-full lg:w-auto lg:max-w-fit`}
+      className={`${HEADER_CARD_CLASS} flex flex-wrap items-center gap-x-3 gap-y-2 text-xs sm:text-[0.8rem] border-[var(--border)] bg-[var(--bg3)] w-full lg:w-auto lg:max-w-fit`}
     >
       {Object.entries(PROFICIENCY).map(([label, style]) => (
         <div key={label} className="flex items-center gap-2">
-          <span className={`px-1.5 py-0.5 rounded border whitespace-nowrap ${style.badgeClass}`}>
+          <span className={`px-2 py-0.5 rounded border whitespace-nowrap ${style.badgeClass}`}>
             <Decrypt text={label} />
           </span>
           <div className={barTrackClass}>
@@ -277,7 +277,7 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
 
       <div
         ref={tipRef}
-        className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[172px] w-max max-w-[220px] transition-all duration-300 max-md:pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
+        className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[190px] w-max max-w-[240px] transition-all duration-300 max-md:pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
           isActive ? 'max-md:opacity-100 max-md:translate-y-0' : 'max-md:opacity-0 max-md:translate-y-1'
         }`}
         role="tooltip"
@@ -285,12 +285,12 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
         <div className="absolute left-1/2 -translate-x-1/2 -top-1 w-2 h-2 rotate-45 bg-[#121218] border-l border-t border-[var(--border)]" />
         <div className="relative rounded-lg border border-[var(--border)] bg-[#121218] px-3 py-2.5 shadow-[0_12px_32px_rgba(0,0,0,0.45)]">
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--accent2)] to-transparent opacity-80" />
-          <p className="text-xs text-white font-medium mb-2 text-center leading-snug">
+          <p className="text-sm text-white font-medium mb-2 text-center leading-snug">
             <Decrypt text={skill.name} />
           </p>
           <div className="flex items-center justify-between gap-2 mb-2">
-            <Decrypt text="Proficiency" className="text-[0.65rem] text-[var(--muted)] shrink-0" />
-            <span className={`text-[0.65rem] uppercase tracking-wide px-2 py-0.5 rounded border whitespace-nowrap ${prof.badgeClass}`}>
+            <Decrypt text="Proficiency" className="text-xs text-[var(--muted)] shrink-0" />
+            <span className={`text-xs uppercase tracking-wide px-2 py-0.5 rounded border whitespace-nowrap ${prof.badgeClass}`}>
               <Decrypt text={skill.level} />
             </span>
           </div>
