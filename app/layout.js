@@ -1,7 +1,7 @@
 import { Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
 import FaviconTheme from "./components/FaviconTheme";
-import { getContent } from "./admin/lib/content";
+import { getContent } from "./lib/site-content";
 
 const pressStart = Press_Start_2P({
   weight: "400",

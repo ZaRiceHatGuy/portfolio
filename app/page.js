@@ -1,4 +1,4 @@
-import { getContent } from "./admin/lib/content";
+import { getContent } from "./lib/site-content";
 import Navbar from "./components/Navbar";
 import Intro from "./components/Intro";
 import Foundation from "./components/Foundation";
@@ -6,7 +6,7 @@ import Career from "./components/Career";
 import Tech from "./components/Tech";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
-import VisitTracker from "./admin/components/VisitTracker";
+import VisitTracker from "@admin/VisitTracker";
 import StartScreen from "./components/StartScreen";
 import CosmicBackground from "./components/CosmicBackground";
 
