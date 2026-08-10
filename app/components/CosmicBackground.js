@@ -7,34 +7,17 @@ const C = {
   spaceMid: "#0a0d24",
   spaceBottom: "#191238",
   line: "rgba(160,190,255,",
-  outline: "#0a0a1c",
-  robotBody: "#52527e",
-  robotDark: "#303052",
-  robotLight: "#6a6a9c",
-  robotMetal: "#3c3c60",
-  visorDark: "#12122e",
   cyan: "#35c3ff",
   cyanRGB: "53,195,255",
-  cyanLight: "#a9e2ff",
   yellow: "#ffd64d",
   yellowRGB: "255,214,77",
-  red: "#ff5f68",
-  hull: "#e2e0f2",
-  hullLight: "#f7f5ff",
 };
-
-const OUTLINE_OFFSETS = [
-  [1, 0],
-  [-1, 0],
-  [0, 1],
-  [0, -1],
-];
 
 /**
  * Full-page retro space backdrop, painted on a fixed canvas behind the page:
  *  - a constellation of drifting star "nodes" connected by faint lines,
- *  - pixel robots and rockets that flow across space in horizontal, vertical
- *    and diagonal paths (with dark outlines so they pop),
+ *  - the robot, spaceship and chess images drifting across space (the robot
+ *    and spaceship occasionally emit musical notes that float away),
  *  - several pixel planets, nebulae and the occasional shooting star.
  */
 export default function CosmicBackground() {
@@ -51,10 +34,23 @@ export default function CosmicBackground() {
     let raf = 0;
     let t = 0;
     let stars = [];
-    let robots = [];
-    let rockets = [];
+    let sprites = [];
+    let notes = [];
     let planets = [];
     let shooting = null;
+
+    // Sprites drift across space, slowly rotating left or right. The robot
+    // and spaceship are the note emitters; the chess piece is smaller.
+    const images = {
+      robot: null,
+      spaceship: null,
+      chess: null,
+    };
+    for (const key of Object.keys(images)) {
+      const img = new Image();
+      img.src = `/images/${key}.png`;
+      images[key] = img;
+    }
 
     const rnd = (a, b) => a + Math.random() * (b - a);
 
@@ -84,56 +80,25 @@ export default function CosmicBackground() {
       }
     }
 
-    // ── Robots flowing in space: drifting, gently rotating left/right ──
-    function makeRobots() {
-      robots = [
-        {
-          x: W * 0.22,
-          y: H * 0.6,
-          vx: 0.5,
-          vy: 0.2,
-          scale: 4.5,
-          phase: 0,
-          spin: -0.35,
-          phase0: 0,
-          accent: C.cyan,
-          accentLight: C.cyanLight,
-        },
-        {
-          x: W * 0.8,
-          y: H * 0.25,
-          vx: -0.36,
-          vy: 0.26,
-          scale: 3.6,
-          phase: 1.7,
-          spin: 0.3,
-          phase0: 1.2,
-          accent: C.yellow,
-          accentLight: C.yellow,
-        },
-        {
-          x: W * 0.45,
-          y: H * 0.9,
-          vx: 0.28,
-          vy: -0.22,
-          scale: 3,
-          phase: 3.1,
-          spin: -0.22,
-          phase0: 2.4,
-          accent: C.red,
-          accentLight: "#ffb3b6",
-        },
+    // ── Sprites: robot, spaceship and chess images flowing through space ──
+    // `w` is the on-screen draw width in px; the chess piece is deliberately
+    // smaller than the robot and the spaceship.
+    function makeSprites() {
+      sprites = [
+        // robots
+        { key: "robot", x: W * 0.2, y: H * 0.6, vx: 0.45, vy: 0.2, w: 110, phase: 0, spin: -0.15, phase0: 0, notes: true },
+        { key: "robot", x: W * 0.78, y: H * 0.25, vx: -0.35, vy: 0.24, w: 88, phase: 1.7, spin: 0.12, phase0: 1.2, notes: false },
+        // spaceships
+        { key: "spaceship", x: -170, y: H * 0.3, vx: 1.0, vy: 0.22, w: 150, phase: 0, spin: 0.08, phase0: 0, notes: true },
+        { key: "spaceship", x: W + 170, y: H * 0.52, vx: -0.8, vy: -0.18, w: 120, phase: 1.2, spin: -0.1, phase0: Math.PI / 2, notes: false },
+        { key: "spaceship", x: W * 0.7, y: H + 160, vx: -0.25, vy: -0.9, w: 110, phase: 2.1, spin: 0.06, phase0: Math.PI, notes: false },
+        // chess — smaller than the robot and spaceship
+        { key: "chess", x: W * 0.45, y: H * 0.85, vx: 0.3, vy: -0.25, w: 70, phase: 3.1, spin: -0.2, phase0: 2.4, notes: false },
+        { key: "chess", x: W * 0.12, y: H * 0.42, vx: 0.2, vy: 0.3, w: 56, phase: 0.8, spin: 0.25, phase0: 1.0, notes: false },
       ];
-    }
-
-    // ── Rockets: horizontal, vertical and diagonal drift paths ──
-    function makeRockets() {
-      rockets = [
-        { x: -120, y: H * 0.32, vx: 1.05, vy: 0.26, scale: 3.6, phase: 0, spin: 0.4, phase0: 0 },
-        { x: W + 120, y: H * 0.55, vx: -0.85, vy: -0.2, scale: 3.1, phase: 1.2, spin: -0.45, phase0: Math.PI / 2 },
-        { x: W * 0.72, y: H + 120, vx: -0.28, vy: -0.95, scale: 2.9, phase: 2.1, spin: 0.3, phase0: Math.PI },
-        { x: W * 0.28, y: -120, vx: 0.28, vy: 0.85, scale: 2.6, phase: 3.3, spin: -0.35, phase0: Math.PI * 1.5 },
-      ];
+      for (const s of sprites) {
+        s.noteTimer = rnd(0.4, 1.4);
+      }
     }
 
     // ── Pixel planets (low-res offscreen upscaled chunky) ──
@@ -238,8 +203,7 @@ export default function CosmicBackground() {
       canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       makeStars();
-      makeRobots();
-      makeRockets();
+      makeSprites();
       // Anchor each planet near its fraction, but clamp so the full sprite
       // (including any ring) always stays fully on screen.
       const M = 16;
@@ -258,143 +222,81 @@ export default function CosmicBackground() {
     }
 
     // ── Sprites ──
-    // Detailed robot: ears, crown, segmented visor, mouth grill, shoulders,
-    // elbows, knee joints, vented chest and armored feet.
-    const robotSprite = ({ px }) => {
-      // antenna
-      px(12, -3, 2, 3, C.robotDark);
-      px(11, -5, 4, 3, C.robotDark);
-      // head
-      px(2, 1, 3, 8, C.robotDark); // left ear
-      px(21, 1, 3, 8, C.robotDark); // right ear
-      px(5, 0, 16, 2, C.robotLight); // crown shine
-      px(5, 2, 16, 7, C.robotBody); // face
-      px(6, 3, 14, 4, C.visorDark); // visor
-      px(7, 4, 4, 2, C.cyan); // left eye
-      px(15, 4, 4, 2, C.cyan); // right eye
-      px(7, 4, 2, 2, C.cyanLight); // eye highlights
-      px(15, 4, 2, 2, C.cyanLight);
-      px(8, 8, 10, 1, C.robotDark); // mouth grill
-      px(5, 8, 1, 1, C.robotMetal); // cheek bolts
-      px(20, 8, 1, 1, C.robotMetal);
-      px(10, 9, 6, 2, C.robotDark); // neck
-      // shoulders
-      px(1, 11, 4, 5, C.robotBody);
-      px(21, 11, 4, 5, C.robotBody);
-      px(1, 11, 4, 2, C.robotLight);
-      px(21, 11, 4, 2, C.robotLight);
-      // torso
-      px(3, 11, 20, 17, C.robotBody);
-      px(3, 11, 20, 2, C.robotLight);
-      // chest panel + core lights + vents
-      px(8, 14, 10, 9, C.visorDark);
-      px(9, 16, 3, 2, C.yellow);
-      px(14, 16, 3, 2, C.yellow);
-      px(9, 20, 8, 1, C.robotDark);
-      px(10, 21, 6, 1, C.robotDark);
-      // waist
-      px(3, 28, 20, 2, C.robotDark);
-      // arms
-      px(1, 16, 3, 7, C.robotBody); // upper L
-      px(0, 22, 4, 2, C.robotDark); // elbow L
-      px(1, 24, 3, 6, C.robotBody); // forearm L
-      px(0, 29, 4, 3, C.robotMetal); // hand L
-      px(22, 16, 3, 7, C.robotBody); // upper R
-      px(22, 22, 4, 2, C.robotDark); // elbow R
-      px(22, 24, 3, 6, C.robotBody); // forearm R
-      px(22, 29, 4, 3, C.robotMetal); // hand R
-      // legs
-      px(5, 30, 6, 5, C.robotBody); // thigh L
-      px(13, 30, 6, 5, C.robotBody); // thigh R
-      px(4, 35, 8, 2, C.robotMetal); // knee L
-      px(12, 35, 8, 2, C.robotMetal); // knee R
-      px(5, 37, 7, 3, C.robotDark); // shin L
-      px(13, 37, 7, 3, C.robotDark); // shin R
-      px(4, 39, 8, 2, C.robotMetal); // foot L
-      px(12, 39, 8, 2, C.robotMetal); // foot R
-    };
+    // A drifting image sprite with a gentle bob, slow rotation and a soft
+    // glow so it pops against the dark space behind it.
+    function drawSprite(s) {
+      const img = images[s.key];
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+      const ar = img.naturalHeight / img.naturalWidth;
+      const w = s.w;
+      const h = Math.round(w * ar);
+      s.h = h;
+      const bob = Math.sin(t * 1.2 + s.phase) * 3;
+      const cx = s.x + Math.sin(t * 0.5 + s.phase) * 4;
+      const cy = s.y + bob;
+      const rot = s.spin * t + s.phase0;
 
-    // Detailed rocket: antenna, nose highlight, window with glint, hull
-    // stripes, rivets, fins and side thrusters.
-    const rocketSprite = ({ px }) => {
-      // antenna
-      px(5, -3, 2, 3, C.robotDark);
-      px(4, -5, 4, 2, C.red);
-      // nose
-      px(4, 0, 4, 4, C.red);
-      px(4, 0, 4, 1, "#ff8a90");
-      // upper hull
-      px(3, 4, 6, 2, C.hullLight);
-      px(3, 6, 6, 6, C.hull);
-      px(3, 7, 1, 1, C.robotDark); // rivet
-      px(8, 7, 1, 1, C.robotDark); // rivet
-      // window
-      px(4, 7, 4, 4, C.visorDark);
-      px(5, 8, 2, 2, C.cyan);
-      px(5, 8, 1, 1, C.cyanLight);
-      // stripe
-      px(3, 12, 6, 1, C.red);
-      // lower hull
-      px(3, 13, 6, 4, C.hull);
-      // fins
-      px(1, 13, 2, 5, C.red);
-      px(9, 13, 2, 5, C.red);
-      px(1, 18, 1, 1, "#ff8a90");
-      px(10, 18, 1, 1, "#ff8a90");
-      // side thrusters
-      px(2, 16, 2, 3, C.robotDark);
-      px(8, 16, 2, 3, C.robotDark);
-      // engine + tail
-      px(4, 17, 4, 3, C.robotDark);
-      px(3, 20, 6, 1, C.robotDark);
-    };
-
-    // Robots flow through space, slowly rotating left or right.
-    function drawRobot(r) {
-      const s = r.scale;
-      const bob = Math.sin(t * 1.2 + r.phase) * 3;
-      const cx = r.x + Math.sin(t * 0.5 + r.phase) * 4;
-      const cy = r.y + bob;
-      const rot = r.spin * t + r.phase0;
-
-      const paint = (ox, oy, outline) => {
-        ctx.save();
-        ctx.translate(cx + ox, cy + oy);
-        ctx.rotate(rot);
-        const px = (gx, gy, w, h, c) => {
-          ctx.fillStyle = outline ? C.outline : c;
-          ctx.fillRect(Math.round((gx - 13) * s), Math.round((gy - 18) * s), Math.ceil(w * s), Math.ceil(h * s));
-        };
-        robotSprite({ px });
-        ctx.restore();
-      };
-
-      for (const [ox, oy] of OUTLINE_OFFSETS) paint(ox, oy, true);
-      paint(0, 0, false);
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rot);
+      // soft halo behind the sprite
+      const glowR = w * 0.95;
+      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, glowR);
+      g.addColorStop(0, "rgba(255,255,255,0.09)");
+      g.addColorStop(0.4, "rgba(120,160,255,0.05)");
+      g.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(-glowR, -glowR, glowR * 2, glowR * 2);
+      ctx.drawImage(img, -w / 2, -h / 2, w, h);
+      ctx.restore();
     }
 
-    // Rockets drift through space, slowly rotating left or right.
-    function drawRocket(r) {
-      const s = r.scale;
-      const bob = Math.sin(t * 1.6 + r.phase) * 3;
-      const cx = r.x;
-      const cy = r.y + bob;
-      const rot = r.spin * t + r.phase0;
+    // Pixel eighth note (♪): flag, stem, filled head.
+    const noteSprite = ({ px, color }) => {
+      // flag
+      px(5, 0, 2, 2, color);
+      px(5, 2, 1, 1, color);
+      // stem
+      px(4, 1, 1, 7, color);
+      // head (filled oval)
+      px(2, 7, 4, 1, color);
+      px(1, 8, 5, 2, color);
+      px(2, 10, 4, 1, color);
+    };
 
-      const paint = (ox, oy, outline) => {
-        ctx.save();
-        ctx.translate(cx + ox, cy + oy);
-        ctx.rotate(rot);
-        const px = (gx, gy, w, h, c) => {
-          ctx.fillStyle = outline ? C.outline : c;
-          ctx.fillRect(Math.round((gx - 6) * s), Math.round((gy - 11) * s), Math.ceil(w * s), Math.ceil(h * s));
-        };
-        rocketSprite({ px });
-        ctx.restore();
+    function drawNote(n) {
+      const s = n.size;
+      ctx.save();
+      ctx.translate(n.x, n.y);
+      ctx.rotate(n.rot);
+      ctx.globalAlpha = n.alpha;
+      const px = (gx, gy, w, h, c) => {
+        ctx.fillStyle = c;
+        ctx.fillRect(Math.round((gx - 3.5) * s), Math.round((gy - 5.5) * s), Math.ceil(w * s), Math.ceil(h * s));
       };
+      noteSprite({ px, color: n.color });
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
 
-      for (const [ox, oy] of OUTLINE_OFFSETS) paint(ox, oy, true);
-      paint(0, 0, false);
+    // Emit 1–2 musical notes from the top of a note-emitting sprite.
+    function emitNotes(s) {
+      const h = s.h || 80;
+      const n = Math.random() < 0.5 ? 1 : 2;
+      for (let i = 0; i < n; i++) {
+        notes.push({
+          x: s.x + (Math.random() - 0.5) * s.w * 0.6,
+          y: s.y - h * 0.55 - 8,
+          vx: (Math.random() - 0.5) * 0.7,
+          vy: -0.55 - Math.random() * 0.7,
+          vr: (Math.random() - 0.5) * 0.2,
+          t: 0,
+          life: 2.4 + Math.random() * 1.4,
+          baseSize: 2.2 + Math.random() * 1.4,
+          alpha: 1,
+          color: Math.random() < 0.55 ? C.yellow : C.cyan,
+        });
+      }
     }
 
     function frame() {
@@ -492,24 +394,38 @@ export default function CosmicBackground() {
         if (shooting.life <= 0 || shooting.x > W + 100 || shooting.y > H + 100) shooting = null;
       }
 
-      // rockets — horizontal, vertical and diagonal paths
-      for (const r of rockets) {
-        r.x += r.vx;
-        r.y += r.vy;
-        wrap(r, 140);
-        drawRocket(r);
+      // sprites — robot, spaceship and chess drifting through space
+      for (const s of sprites) {
+        s.x += s.vx;
+        s.y += s.vy;
+        wrap(s, 200);
+        if (s.notes) {
+          s.noteTimer -= 0.016;
+          if (s.noteTimer <= 0) {
+            s.noteTimer = 0.9 + Math.random() * 1.1;
+            emitNotes(s);
+          }
+        }
+        drawSprite(s);
       }
 
-      // robots — flowing in space
-      for (const r of robots) {
-        r.x += r.vx;
-        r.y += r.vy;
-        wrap(r, 160);
-        drawRobot(r);
+      // musical notes — float up and fade out
+      for (const n of notes) {
+        n.t += 0.016;
+        n.x += n.vx + Math.sin(n.t * 3 + n.x) * 0.08;
+        n.y += n.vy;
+        n.vy -= 0.012; // gentle acceleration upward
+        n.rot += n.vr;
+        const k = Math.max(0, 1 - n.t / n.life);
+        n.alpha = k;
+        n.size = n.baseSize * (0.55 + 0.45 * k);
       }
+      notes = notes.filter((n) => n.t < n.life);
+      for (const n of notes) drawNote(n);
 
       raf = requestAnimationFrame(frame);
-    }      makePlanets();
+    }
+    makePlanets();
     resize();
     frame();
 
