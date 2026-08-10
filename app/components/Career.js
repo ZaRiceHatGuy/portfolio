@@ -12,8 +12,9 @@ export const DEFAULT_ITEMS = [
     "role": "Web Development Intern",
     "period": "Apr 2026 - Jul 2026",
     "bullets": [
-      "Audited the existing site, documented findings, and built a full redesign from scratch aligned with the existing brand structure.",
-      "Learned Framer and TypeScript to develop custom code components, enabling more flexible and dynamic UI within Framer's environment."
+      "Conducted a full audit across 5 pages, identifying and prioritizing 23 issues spanning SEO, performance, accessibility, and GDPR compliance, and documented the site's design token system to establish a brand baseline — delivered as a report signed off by the founder",
+      "Rebuilt the website using Framer and TypeScript, redesigning all 5 pages and building a contact form, job application page, and admin dashboard with Supabase integration for managing news, listings, and applications",
+      "Configured GA4 and Search Console for baseline metrics, then designed a 17-experiment Build-Measure-Learn roadmap grounded in audit findings, each written as a testable hypothesis"
     ]
   },
   {
@@ -23,8 +24,9 @@ export const DEFAULT_ITEMS = [
     "role": "Section Leader - Percussion",
     "period": "Sep 2023 - Jun 2024",
     "bullets": [
-      "Led weekly rehearsals for a percussion section with a total of 11 members and mentored 8 junior members throughout the school year.",
-      "Ensured the group follows the conductor and stays on track with the rest of the band during rehearsals and concert performances."
+      "Led an 11-member percussion section, ensuring consistent performance quality in sync with the conductor throughout the year",
+      "Mentored 8 junior members hands-on, demonstrating techniques in real time and guiding them through practice to build their skills",
+      "Performed in multiple events including the Winter Band Concert, Spring Festival Concert, Vic Lewis Trip Concert, Final Band Concert, and the school Graduation Ceremony"
     ]
   },
   {
