@@ -17,7 +17,7 @@ export const DEFAULT_ITEMS = [
     ]
   },
   {
-    "category": "Activities",
+    "category": "Activity",
     "org": "Centennial High School Band",
     "location": "Calgary, Alberta, Canada",
     "role": "Section Leader - Percussion",
@@ -28,14 +28,27 @@ export const DEFAULT_ITEMS = [
     ]
   },
   {
-    "category": "Activities",
+    "category": "Activity",
     "role": "MegaByte Hackathon",
     "org": "MegaHacks",
     "location": "Calgary, Alberta, Canada",
     "period": "January 2026",
     "bullets": [
-      "Job-matching platform connecting shelter residents with local businesses offering employment opportunities, built in 2 days",
-      "Contributed frontend pages as part of a small team under tight hackathon constraints"
+      "Owned UI design and implementation across the entire platform, translating the team's job-matching concept into a functional interface connecting shelter residents with local employers",
+      "Contributed to shaping the product direction through team discussions and ideation, helping define how the platform would address the shelter-to-employment matching problem",
+      "Competed against 17 teams in a 2-day build sprint, placing close to the top 8 in a competitive field"
+    ]
+  },
+  {
+    "category": "Activity",
+    "role": "Cursor Calgary Hackathon",
+    "org": "MegaHacks and Cursor",
+    "location": "Calgary, Alberta, Canada",
+    "period": "May 2026",
+    "bullets": [
+      "Built UI across all pages except the account page, and led QA testing to ensure smooth, correct end-to-end user flows before submission",
+      "Competed in a hackathon format requiring Cursor as the sole development tool, adapting to an AI-assisted coding workflow under time pressure",
+      "Scored 75 against a top-8 cutoff of 80, competing against 37 teams"
     ]
   }
 ];

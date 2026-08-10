@@ -22,7 +22,9 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Editing content
 
-All page content is embedded in the site components under `app/components/` (`Intro.js`, `Foundation.js`, `Career.js`, `Tech.js`, `Projects.js`, `Contact.js`), with site-level values (brand, tagline, resume URL) in `app/page.js` and `app/layout.js`. To change content, edit the relevant component and deploy normally.
+All page content is embedded in the site components under `app/components/` (`Intro.js`, `Foundation.js`, `Career.js`, `Tech.js`, `Projects.js`, `Contact.js`), with site-level values (brand, tagline, resume URL) in `app/page.js` and `app/layout.js`.
+
+**Workflow:** edit content in the local admin (`/admin`), then commit & push — the admin's **Save** automatically syncs the change into the components, so the diff is already in git. If you edit `app/admin/data/content.json` by hand instead, run `node scripts/sync-content.mjs` first. Either way, commit and push to deploy.
 
 ### Local admin tool (not part of the deployed site)
 
