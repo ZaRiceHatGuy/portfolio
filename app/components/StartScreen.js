@@ -83,16 +83,27 @@ export default function StartScreen({ brand, tagline, children }) {
     };
   }, [banner]);
 
+  // Only intercept Enter/Space while the boot screen is actually up, and
+  // never while the user is typing in a form field — otherwise every Space
+  // and Enter keypress on the page would be eaten (broken text inputs).
   useEffect(() => {
+    if (phase === "game") return; // boot screen gone — leave all keys alone
     const onKey = (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        start();
-      }
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const t = e.target;
+      const isTyping =
+        t instanceof HTMLElement &&
+        (t.tagName === "INPUT" ||
+          t.tagName === "TEXTAREA" ||
+          t.tagName === "SELECT" ||
+          t.isContentEditable);
+      if (isTyping) return;
+      e.preventDefault();
+      start();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [start]);
+  }, [phase, start]);
 
   // Lock scroll while the boot screen is up so the page behind stays put.
   useEffect(() => {
