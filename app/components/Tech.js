@@ -188,7 +188,7 @@ function SkillsBlock({ groups = [] }) {
 
   return (
     <div className="w-full overflow-visible">
-      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 pt-3.5 overflow-x-clip">
+      <div data-skills-card className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3 pt-3.5 overflow-x-clip">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-y-6 overflow-visible">
           {groups.map((group, groupIdx) => (
             <Reveal
@@ -223,27 +223,57 @@ function SkillsBlock({ groups = [] }) {
 function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
   const prof = PROFICIENCY[skill.level] || PROFICIENCY.Intermediate;
   const tipRef = useRef(null);
+  const [hovered, setHovered] = useState(false);
 
-  // On mobile, active tooltips for badges in the edge columns can poke past
-  // the viewport. Clamp the tooltip horizontally so it stays fully on screen.
+  // Tooltips for badges in the edge columns can poke past the card edge /
+  // viewport and get clipped (the card clips horizontally). Clamp the
+  // tooltip so it stays fully on screen — on mobile when tapped, on desktop
+  // while hovered. Re-clamp on scroll/resize while it's visible.
   useLayoutEffect(() => {
     const el = tipRef.current;
-    if (!el || !window.matchMedia('(max-width: 767px)').matches) return;
-    if (!isActive) {
+    if (!el) return;
+    const visible = isActive || hovered;
+    if (!visible) {
       el.style.translate = '';
       return;
     }
-    const r = el.getBoundingClientRect();
-    const margin = 16;
-    let shift = 0;
-    if (r.right > window.innerWidth - margin) shift = window.innerWidth - margin - r.right;
-    if (r.left < margin) shift = Math.max(shift, margin - r.left);
-    el.style.translate = shift ? `calc(-50% + ${shift}px) 0` : '';
-  }, [isActive]);
+    const apply = () => {
+      // Compute the un-clamped position from the badge center + tooltip width
+      // instead of measuring the tooltip — the tooltip's 300ms fade/translate
+      // transition makes getBoundingClientRect read mid-animation values.
+      const badge = el.parentElement;
+      const bc = badge.getBoundingClientRect();
+      const center = bc.left + bc.width / 2;
+      const w = el.offsetWidth;
+      const rLeft = center - w / 2;
+      const rRight = center + w / 2;
+      const margin = 16;
+      // The card clips horizontally (overflow-x-clip), so clamp against its
+      // edges — the viewport margin alone is not enough when the card is
+      // inset from the window edge.
+      const card = el.closest('[data-skills-card]');
+      const cr = card ? card.getBoundingClientRect() : null;
+      const leftEdge = cr ? cr.left : 0;
+      const rightEdge = cr ? cr.right : window.innerWidth;
+      let shift = 0;
+      if (rRight > rightEdge - margin) shift = rightEdge - margin - rRight;
+      if (rLeft < leftEdge + margin) shift = Math.max(shift, leftEdge + margin - rLeft);
+      el.style.translate = shift ? `calc(-50% + ${shift}px) 0` : '';
+    };
+    apply();
+    window.addEventListener('scroll', apply, { passive: true });
+    window.addEventListener('resize', apply);
+    return () => {
+      window.removeEventListener('scroll', apply);
+      window.removeEventListener('resize', apply);
+    };
+  }, [isActive, hovered]);
 
   return (      <div
         data-skill-badge
-        className={`group/skill relative justify-self-center w-[40px] h-[40px] sm:w-[46px] sm:h-[46px] ${
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={`group/skill relative justify-self-center w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] ${
         isActive ? 'z-50' : 'z-0'
       } hover:z-50 focus-within:z-50`}
     >
@@ -256,7 +286,7 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
             }
           }}
           aria-expanded={isActive}
-          className={`skill-badge relative w-full h-full border-2 border-[#000] bg-[var(--bg3)] shadow-[inset_2px_2px_0_rgba(255,255,255,0.12),inset_-2px_-2px_0_rgba(0,0,0,0.3)] flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-[var(--accent2)] hover:bg-[rgba(var(--accent2-rgb),0.08)] hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] max-md:active:border-[var(--accent2)] max-md:active:bg-[rgba(var(--accent2-rgb),0.08)] ${
+          className={`skill-badge relative w-full h-full border-2 border-[#000] bg-[var(--bg3)] shadow-[inset_2px_2px_0_rgba(255,255,255,0.12),inset_-2px_-2px_0_rgba(0,0,0,0.3)] flex items-center justify-center cursor-pointer transition-all duration-300 hover:border-[var(--accent2)] hover:bg-[rgba(var(--accent2-rgb),0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] max-md:active:border-[var(--accent2)] max-md:active:bg-[rgba(var(--accent2-rgb),0.08)] ${
             isActive
               ? 'max-md:border-[var(--accent2)] max-md:bg-[rgba(var(--accent2-rgb),0.08)] max-md:-translate-y-1'
               : ''
@@ -277,7 +307,7 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
 
       <div
         ref={tipRef}
-        className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[190px] w-max max-w-[240px] transition-all duration-300 max-md:pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
+        className={`absolute top-[calc(100%+10px)] left-1/2 -translate-x-1/2 z-50 min-w-[190px] w-max max-w-[240px] transition-all duration-300 pointer-events-none md:opacity-0 md:translate-y-1 md:group-hover/skill:opacity-100 md:group-hover/skill:translate-y-0 md:group-focus-within/skill:opacity-100 md:group-focus-within/skill:translate-y-0 ${
           isActive ? 'max-md:opacity-100 max-md:translate-y-0' : 'max-md:opacity-0 max-md:translate-y-1'
         }`}
         role="tooltip"
