@@ -11,7 +11,7 @@ export const DEFAULT_PROFILE = {
   "location": "Calgary, AB, Canada",
   "phone": "+1 (403) 827-2659",
   "email": "davidnguyen107206@gmail.com",
-  "github": "https://github.com/ZaRiceHatGuy",
+  "github": "https://github.com/davidntd",
   "linkedin": "http://www.linkedin.com/in/davidntd",
   "resumeUrl": "/Resume/David-Nguyen---ResumeCV.pdf",
   "profileImage": "/profile/profile.jpg",

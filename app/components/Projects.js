@@ -104,7 +104,7 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
 
       <div className="text-center">
         <a
-          href="https://github.com/ZaRiceHatGuy"
+          href="https://github.com/davidntd"
           target="_blank"
           rel="noopener noreferrer"
           className="retro-btn px-6 py-3"
