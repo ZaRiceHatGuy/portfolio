@@ -80,6 +80,11 @@ export const DEFAULT_GROUPS = [
         "name": "Node.js",
         "icon": "/icons/NodeJS.svg",
         "level": "Intermediate"
+      },
+      {
+        "name": "Arduino",
+        "icon": "/icons/Arduino.svg",
+        "level": "Intermediate"
       }
     ]
   },
@@ -104,6 +109,11 @@ export const DEFAULT_GROUPS = [
       {
         "name": "Supabase",
         "icon": "/icons/Supabase.svg",
+        "level": "Intermediate"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "/icons/PlatformIO.svg",
         "level": "Intermediate"
       }
     ]
