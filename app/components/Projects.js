@@ -69,7 +69,8 @@ export const DEFAULT_ITEMS = [
       }
     ],
     "createdAt": "2026-01-24T17:21:16Z",
-    "pushedAt": "2026-01-25T23:37:58Z"
+    "pushedAt": "2026-01-25T23:37:58Z",
+    "private": false
   },
   {
     "name": "Village Rental",
@@ -102,7 +103,8 @@ export const DEFAULT_ITEMS = [
       }
     ],
     "createdAt": "2026-04-05T21:05:52Z",
-    "pushedAt": "2026-04-05T21:07:51Z"
+    "pushedAt": "2026-04-05T21:07:51Z",
+    "private": false
   },
   {
     "name": "Quadratic Solver",
@@ -114,7 +116,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-04-05T07:26:15Z",
-    "pushedAt": "2026-04-05T07:26:46Z"
+    "pushedAt": "2026-04-05T07:26:46Z",
+    "private": false
   },
   {
     "name": "PingPongPyGame",
@@ -126,7 +129,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-04-05T06:59:16Z",
-    "pushedAt": "2026-04-05T07:04:00Z"
+    "pushedAt": "2026-04-05T07:04:00Z",
+    "private": false
   },
   {
     "name": "cpsy-300-project-1",
@@ -138,7 +142,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-02-04T21:43:05Z",
-    "pushedAt": "2026-02-11T00:39:01Z"
+    "pushedAt": "2026-02-11T00:39:01Z",
+    "private": false
   },
   {
     "name": "cpsy-300-project-2",
@@ -150,7 +155,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-03-03T07:11:43Z",
-    "pushedAt": "2026-04-08T18:40:40Z"
+    "pushedAt": "2026-04-08T18:40:40Z",
+    "private": false
   },
   {
     "name": "itsc-320-assignment-2",
@@ -162,7 +168,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-02-24T03:30:46Z",
-    "pushedAt": "2026-03-07T05:54:29Z"
+    "pushedAt": "2026-03-07T05:54:29Z",
+    "private": false
   },
   {
     "name": "NomViet",
@@ -174,7 +181,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-08-17T19:33:19Z",
-    "pushedAt": "2026-08-19T04:50:55Z"
+    "pushedAt": "2026-08-19T04:50:55Z",
+    "private": false
   },
   {
     "name": "portfolio",
@@ -186,7 +194,8 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [],
     "createdAt": "2026-06-14T01:15:02Z",
-    "pushedAt": "2026-08-15T22:22:54Z"
+    "pushedAt": "2026-08-20T01:31:16Z",
+    "private": false
   },
   {
     "name": "brown-bakery-site",
@@ -198,7 +207,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2025-01-28T02:58:38Z",
     "pushedAt": "2025-02-17T09:43:12Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "capstone",
@@ -210,7 +220,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-01-23T00:44:01Z",
     "pushedAt": "2026-04-21T04:02:46Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": true
   },
   {
     "name": "arcwellness-backend",
@@ -222,7 +233,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-02-19T15:27:10Z",
     "pushedAt": "2026-04-15T18:57:57Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "trainsight",
@@ -234,7 +246,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-03-09T07:57:25Z",
     "pushedAt": "2026-04-17T08:45:26Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": true
   },
   {
     "name": "trainsight-backend",
@@ -246,7 +259,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-03-09T23:53:15Z",
     "pushedAt": "2026-03-30T22:51:50Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "trainsight-ai",
@@ -258,7 +272,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-03-18T19:12:44Z",
     "pushedAt": "2026-06-04T17:15:27Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "capstone-testing",
@@ -270,7 +285,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-03-24T04:09:33Z",
     "pushedAt": "2026-04-15T03:37:35Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": true
   },
   {
     "name": "itsc-320-assignment-4",
@@ -282,7 +298,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-03-31T21:05:06Z",
     "pushedAt": "2026-04-17T05:15:59Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": true
   },
   {
     "name": "arcwellness-admin",
@@ -294,7 +311,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-04-02T04:20:17Z",
     "pushedAt": "2026-04-16T04:44:32Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "cursor-hackahon",
@@ -306,7 +324,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-05-23T19:43:29Z",
     "pushedAt": "2026-05-29T15:52:12Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "Project-1-simple-LED",
@@ -318,7 +337,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-08-14T16:34:02Z",
     "pushedAt": "2026-08-14T16:36:40Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "Project-2-LED-with-button",
@@ -330,7 +350,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-08-14T18:53:57Z",
     "pushedAt": "2026-08-14T18:55:21Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "Project-3-Buzzer-with-button",
@@ -342,7 +363,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-08-15T01:12:04Z",
     "pushedAt": "2026-08-15T01:13:07Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   },
   {
     "name": "Project-4-LED-with-photoresistor",
@@ -354,7 +376,8 @@ export const DEFAULT_ITEMS = [
     "createdAt": "2026-08-15T02:29:07Z",
     "pushedAt": "2026-08-15T02:32:30Z",
     "tech": [],
-    "best": false
+    "best": false,
+    "private": false
   }
 ];
 // @sync-end
