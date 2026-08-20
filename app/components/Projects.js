@@ -175,7 +175,7 @@ export const DEFAULT_ITEMS = [
     "name": "NomViet",
     "desc": "Nôm Việt is a reference tool for learning Chữ Nôm, the traditional Vietnamese writing system. You can explore characters by reading, glyph, or stroke count. It also translates Quốc Ngữ into phonetic script with Chữ Nôm candidates.",
     "github": "https://github.com/davidntd/NomViet.git",
-    "live": null,
+    "live": "https://nom-viet.vercel.app",
     "image": null,
     "video": null,
     "best": false,
@@ -188,13 +188,13 @@ export const DEFAULT_ITEMS = [
     "name": "portfolio",
     "desc": "A retro-pixel, single-page Next.js portfolio with a terminal-style start screen. It shows my profile, education, career, tech stack, and projects. The project grid fetches live repo data from GitHub and filters by Newest, Oldest, or Best.",
     "github": "https://github.com/davidntd/portfolio.git",
-    "live": null,
+    "live": "https://davidntd-portfolio.vercel.app",
     "image": null,
     "video": null,
     "best": false,
     "tech": [],
     "createdAt": "2026-06-14T01:15:02Z",
-    "pushedAt": "2026-08-20T01:34:22Z",
+    "pushedAt": "2026-08-20T01:38:31Z",
     "private": false
   },
   {
@@ -227,7 +227,7 @@ export const DEFAULT_ITEMS = [
     "name": "arcwellness-backend",
     "desc": "A backend application for SAIT capstone project",
     "github": "https://github.com/falconvn2006/arcwellness-backend",
-    "live": "",
+    "live": null,
     "image": null,
     "video": null,
     "createdAt": "2026-02-19T15:27:10Z",
@@ -359,7 +359,7 @@ export const DEFAULT_ITEMS = [
     "github": "https://github.com/davidntd/Project-3-Buzzer-with-button",
     "live": null,
     "image": null,
-    "video": null,
+    "video": "",
     "createdAt": "2026-08-15T01:12:04Z",
     "pushedAt": "2026-08-15T01:13:07Z",
     "tech": [],
@@ -444,13 +444,22 @@ function TechChip({ name, tone = "lang", icon }) {
   );
 }
 
-function ProjectLink({ href, children }) {
+function ProjectLink({ href, children, as, onClick, title }) {
+  const cls = "font-pixel text-[0.55rem] px-3 py-2 rounded-md border-2 border-[#000] bg-[var(--bg3)] text-[var(--accent2)] shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),inset_-2px_-2px_0_rgba(0,0,0,0.3)] hover:border-[var(--accent2)] hover:bg-[var(--accent2)] hover:text-[#000] transition-colors duration-300 inline-flex items-center gap-1.5 cursor-pointer";
+  if (as === "button") {
+    return (
+      <button type="button" onClick={onClick} className={cls} title={title}>
+        {children}
+      </button>
+    );
+  }
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-pixel text-[0.55rem] px-3 py-2 border-2 border-[var(--accent)] text-[var(--accent)] hover:border-[var(--accent2)] hover:text-[var(--accent2)] transition-colors duration-300 inline-flex items-center gap-1.5"
+      className={cls}
+      title={title}
     >
       <Decrypt text={children} />
     </a>
@@ -595,15 +604,7 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
                   </div>
                 )}
 
-                {p.media.length > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setMediaGallery({ open: true, items: p.media, index: 0 })}
-                    className="flex items-center gap-2 px-3 py-2 rounded-md border-2 border-[#000] bg-[var(--bg3)] text-[var(--accent2)] font-pixel text-[0.6rem] uppercase tracking-[0.1em] hover:bg-[var(--accent2)] hover:text-[#000] transition-colors cursor-pointer shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),inset_-2px_-2px_0_rgba(0,0,0,0.3)] w-full justify-center"
-                  >
-                    ▶ Media ({p.media.length})
-                  </button>
-                )}
+
 
                 {p.desc && (
                   <Decrypt
@@ -614,8 +615,13 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
                 )}
 
                 <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border)]">
-                  {!p.private && <ProjectLink href={p.github}>GitHub →</ProjectLink>}
-                  {p.live && <ProjectLink href={p.live}>▶ Play</ProjectLink>}
+                  {!p.private && <ProjectLink href={p.github} title="View Git Repo">GitHub</ProjectLink>}
+                  {p.live && <ProjectLink href={p.live} title="View Live Site">Live</ProjectLink>}
+                  {p.media.length > 0 && (
+                    <ProjectLink as="button" onClick={() => setMediaGallery({ open: true, items: p.media, index: 0 })} title="Preview Img/VID">
+                      Preview
+                    </ProjectLink>
+                  )}
                 </div>
               </article>
             </Reveal>
