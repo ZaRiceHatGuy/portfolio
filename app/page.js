@@ -10,6 +10,10 @@ import Contact from "./components/Contact";
 import StartScreen from "./components/StartScreen";
 import CosmicBackground from "./components/CosmicBackground";
 
+// Force server-rendered on every request so admin edits to content.json
+// are reflected immediately without a rebuild.
+export const dynamic = "force-dynamic";
+
 // Reads the locally-edited admin content when present (app/admin is gitignored
 // and local-only), so changes saved in /admin show up in dev and in local
 // production builds. Returns null when the file is absent — e.g. git-based

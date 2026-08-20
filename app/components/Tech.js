@@ -115,6 +115,11 @@ export const DEFAULT_GROUPS = [
         "name": "PlatformIO",
         "icon": "/icons/PlatformIO.svg",
         "level": "Intermediate"
+      },
+      {
+        "name": "ESP32",
+        "icon": "/icons/Espressif32.svg",
+        "level": "Intermediate"
       }
     ]
   }
@@ -234,6 +239,8 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
   const prof = PROFICIENCY[skill.level] || PROFICIENCY.Intermediate;
   const tipRef = useRef(null);
   const [hovered, setHovered] = useState(false);
+  // Only saved /icons SVGs are shown here — never fetch an external CDN URL.
+  const isLocalIcon = typeof skill.icon === "string" && skill.icon.startsWith("/icons/");
 
   // Tooltips for badges in the edge columns can poke past the card edge /
   // viewport and get clipped (the card clips horizontally). Clamp the
@@ -303,15 +310,21 @@ function SkillBadge({ skill, revealDelay = 0, isActive = false, onActivate }) {
           }`}
           aria-label={`${skill.name}, ${skill.level}`}
         >
-          <img
-            src={skill.icon}
-            alt=""
-            width={26}
-            height={26}
-            className={`object-contain transition-transform duration-300 group-hover/skill:scale-110 ${
-              isActive ? 'max-md:scale-110' : ''
-            }`}
-          />
+          {isLocalIcon ? (
+            <img
+              src={skill.icon}
+              alt=""
+              width={30}
+              height={30}
+              className={`object-contain transition-transform duration-300 group-hover/skill:scale-110 ${
+                isActive ? 'max-md:scale-110' : ''
+              }`}
+            />
+          ) : (
+            <span className="font-pixel text-sm leading-none text-[var(--text)]">
+              {String(skill.name ?? "").slice(0, 1)}
+            </span>
+          )}
         </button>
       </Decrypt>
 

@@ -22,15 +22,6 @@ export const DEFAULT_EDUCATION = [
       "Software Testing and Deployment",
       "Software Projects: Analysis, Design, and Management"
     ]
-  },
-  {
-    "degree": "Integrated Artificial Intelligence Post-Diploma Certificate",
-    "school": "SAIT (Southern Alberta Institute of Technology)",
-    "year": "2026 - 2027",
-    "gpa": null,
-    "status": "Upcoming",
-    "statusVariant": "yellow",
-    "coursework": []
   }
 ];
 // @sync-end

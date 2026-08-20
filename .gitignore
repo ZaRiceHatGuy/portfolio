@@ -40,10 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/data
-/lib
-/app/api
+# Local admin panel (never deployed)
 /app/admin
 /.freebuff
-/.next
-/scripts

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Phone, Mail, Send } from "lucide-react";
 import Decrypt from "./Decrypt";
 import { PanelCard, PanelLabel } from "./PanelCard";
@@ -45,6 +45,30 @@ const inputClass =
 
 const toTelHref = (phone) => `tel:${phone.replace(/[^+\d]/g, "")}`;
 const toDisplayUrl = (url) => url.replace(/^https?:\/\/(www\.)?/, "");
+
+function AutoGrowTextarea({ value, onChange }) {
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    node.style.height = "auto";
+    node.style.height = `${node.scrollHeight}px`;
+  }, [value]);
+
+  return (
+    <textarea
+      ref={ref}
+      id="message"
+      name="message"
+      rows={3}
+      value={value}
+      onChange={onChange}
+      required
+      className={`${inputClass} overflow-hidden resize-none`}
+    />
+  );
+}
 
 // Identical to the profile card's contact buttons — chunky retro icon buttons.
 const iconBtnClass =
@@ -164,15 +188,7 @@ function ContactForm({ contact: { phone, email, linkedin, github } }) {
               <label htmlFor="message" className="block mb-1 text-sm text-white">
                 <Decrypt text="Message" />
               </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={3}
-                value={formData.message}
-                onChange={handleChange}
-                required
-                className={`${inputClass} resize-y`}
-              />
+              <AutoGrowTextarea value={formData.message} onChange={handleChange} />
             </div>
 
             <button

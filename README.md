@@ -28,7 +28,9 @@ All page content is embedded in the site components under `app/components/` (`In
 
 ### Local admin tool (not part of the deployed site)
 
-`app/admin/` is a local-only editing tool — it's gitignored and never pushed to GitHub. It can edit content and count visits on your machine, but the deployed site is fully static: its content comes from the components above, and it doesn't track visits.
+`app/admin/` is a local-only editing tool — it's gitignored and never pushed to GitHub. It can edit content and count visits on your machine. The deployed project grid automatically refreshes its GitHub repository list on page load, when the tab regains focus, and every five minutes.
+
+For the deployed grid to include private repositories and repositories where you accepted a collaborator invitation or joined an organization without making a commit, configure a GitHub token as `GITHUB_TOKEN` in the deployment environment (and `.env.local` for local development). The server uses GitHub's `owner,collaborator,organization_member` affiliation filter; without a token, GitHub cannot expose those memberships and only public owned/authored repositories can be discovered.
 
 ### Favicon & navbar logo
 
