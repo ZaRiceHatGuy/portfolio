@@ -15,7 +15,7 @@ export const DEFAULT_ITEMS = [
     "live": "https://project-homefull.vercel.app/",
     "image": null,
     "video": null,
-    "best": false,
+    "best": true,
     "tech": [
       {
         "name": "JavaScript",
@@ -64,7 +64,7 @@ export const DEFAULT_ITEMS = [
     "live": null,
     "image": null,
     "video": null,
-    "best": false,
+    "best": true,
     "tech": [
       {
         "name": "Python",
@@ -273,7 +273,7 @@ export const DEFAULT_ITEMS = [
     "live": "https://nom-viet.vercel.app",
     "image": null,
     "video": null,
-    "best": false,
+    "best": true,
     "tech": [
       {
         "name": "JavaScript",
@@ -365,7 +365,7 @@ export const DEFAULT_ITEMS = [
         "tone": "framework"
       }
     ],
-    "best": false,
+    "best": true,
     "private": true
   },
   {
