@@ -454,6 +454,7 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
         live: item.live ?? null,
         image: item.image ?? null,
         video: item.video ?? null,
+        private: item.private ?? false,
         tech: item.tech ?? null,
         best: !!item.best,
         bestOrder: idx,
@@ -578,7 +579,7 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
                 )}
 
                 <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border)]">
-                  <ProjectLink href={p.github}>GitHub →</ProjectLink>
+                  {!p.private && <ProjectLink href={p.github}>GitHub →</ProjectLink>}
                   {p.live && <ProjectLink href={p.live}>▶ Play</ProjectLink>}
                 </div>
               </article>
