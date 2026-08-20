@@ -82,6 +82,11 @@ export const DEFAULT_GROUPS = [
         "level": "Intermediate"
       },
       {
+        "name": "Tailwind CSS",
+        "icon": "/icons/TailwindCSS.svg",
+        "level": "Proficient"
+      },
+      {
         "name": "Arduino",
         "icon": "/icons/Arduino.svg",
         "level": "Intermediate"
