@@ -443,6 +443,7 @@ function ProjectLink({ href, children }) {
  */
 export default function Projects({ items = DEFAULT_ITEMS }) {
   const [filter, setFilter] = useState("newest");
+  const [mediaGallery, setMediaGallery] = useState({ open: false, items: [], index: 0 });
 
   // Build the pool from admin items, filtering out hidden repos.
   const pool = useMemo(() => {
@@ -451,9 +452,10 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
         name: item.name,
         desc: item.desc ?? "",
         github: item.github,
-        live: item.live ?? null,
+        live: item.live || null,
         image: item.image ?? null,
         video: item.video ?? null,
+        media: Array.isArray(item.media) ? item.media : [],
         private: item.private ?? false,
         tech: item.tech ?? null,
         best: !!item.best,
@@ -462,6 +464,16 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
         createdAt: item.createdAt ?? null,
         pushedAt: item.pushedAt ?? null,
       }))
+      .map((p) => {
+        // Merge legacy single image/video fields into media array
+        if ((!p.media || p.media.length === 0) && (p.image || p.video)) {
+          const m = [];
+          if (p.image) m.push({ type: "image", url: p.image });
+          if (p.video) m.push({ type: "video", url: p.video });
+          return { ...p, media: m };
+        }
+        return { ...p, media: p.media || [] };
+      })
       .filter((p) => !HIDDEN_REPOS.has(String(p.name ?? "").toLowerCase()));
   }, [items]);
 
@@ -560,14 +572,14 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
                   </div>
                 )}
 
-                {(p.image || p.video) && (
-                  <div className="relative rounded-lg overflow-hidden border border-[var(--border)] bg-[var(--bg3)] aspect-video">
-                    {p.video ? (
-                      <video src={p.video} controls preload="metadata" className="w-full h-full object-contain" />
-                    ) : (
-                      <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                    )}
-                  </div>
+                {p.media.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setMediaGallery({ open: true, items: p.media, index: 0 })}
+                    className="flex items-center gap-2 px-3 py-2 rounded-md border-2 border-[#000] bg-[var(--bg3)] text-[var(--accent2)] font-pixel text-[0.6rem] uppercase tracking-[0.1em] hover:bg-[var(--accent2)] hover:text-[#000] transition-colors cursor-pointer shadow-[inset_2px_2px_0_rgba(255,255,255,0.08),inset_-2px_-2px_0_rgba(0,0,0,0.3)] w-full justify-center"
+                  >
+                    ▶ Media ({p.media.length})
+                  </button>
                 )}
 
                 {p.desc && (
@@ -598,6 +610,92 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
           <Decrypt text="View more on GitHub →" />
         </a>
       </div>
+
+      {/* Media Gallery Popup */}
+      {mediaGallery.open && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/85 p-4"
+          onClick={() => setMediaGallery({ ...mediaGallery, open: false })}
+        >
+          <div
+            className="relative max-w-3xl w-full flex flex-col items-center gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              type="button"
+              onClick={() => setMediaGallery({ ...mediaGallery, open: false })}
+              className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full bg-[var(--bg2)] border-2 border-[#000] text-[var(--text)] flex items-center justify-center font-pixel text-xs hover:bg-red-500/20 hover:text-red-400 transition-colors cursor-pointer"
+            >
+              ✕
+            </button>
+
+            {/* Left arrow */}
+            {mediaGallery.items.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setMediaGallery({
+                  ...mediaGallery,
+                  index: (mediaGallery.index - 1 + mediaGallery.items.length) % mediaGallery.items.length,
+                })}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--bg2)] border-2 border-[#000] text-[var(--accent2)] flex items-center justify-center font-pixel text-lg hover:bg-[var(--accent2)] hover:text-[#000] transition-colors cursor-pointer shadow-lg"
+              >
+                ◀
+              </button>
+            )}
+
+            {/* Media content */}
+            <div className="rounded-lg overflow-hidden border-2 border-[#000] bg-[var(--bg3)] max-h-[70vh] flex items-center justify-center">
+              {mediaGallery.items[mediaGallery.index]?.type === "video" ? (
+                <video
+                  src={mediaGallery.items[mediaGallery.index].url}
+                  controls
+                  autoPlay
+                  className="max-h-[70vh] max-w-full object-contain"
+                />
+              ) : (
+                <img
+                  src={mediaGallery.items[mediaGallery.index]?.url}
+                  alt=""
+                  className="max-h-[70vh] max-w-full object-contain"
+                />
+              )}
+            </div>
+
+            {/* Right arrow */}
+            {mediaGallery.items.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setMediaGallery({
+                  ...mediaGallery,
+                  index: (mediaGallery.index + 1) % mediaGallery.items.length,
+                })}
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-[var(--bg2)] border-2 border-[#000] text-[var(--accent2)] flex items-center justify-center font-pixel text-lg hover:bg-[var(--accent2)] hover:text-[#000] transition-colors cursor-pointer shadow-lg"
+              >
+                ▶
+              </button>
+            )}
+
+            {/* Counter dots */}
+            {mediaGallery.items.length > 1 && (
+              <div className="flex gap-2 mt-1">
+                {mediaGallery.items.map((_, di) => (
+                  <button
+                    key={di}
+                    type="button"
+                    onClick={() => setMediaGallery({ ...mediaGallery, index: di })}
+                    className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
+                      di === mediaGallery.index
+                        ? "bg-[var(--accent2)]"
+                        : "bg-[var(--muted)] opacity-40"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </Section>
   );
 }
