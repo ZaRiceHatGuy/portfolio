@@ -28,11 +28,6 @@ export const DEFAULT_ITEMS = [
         "tone": "lang"
       },
       {
-        "name": "Leaflet",
-        "icon": "https://cdn.simpleicons.org/leaflet/white",
-        "tone": "framework"
-      },
-      {
         "name": "Next.js",
         "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
         "tone": "framework"
@@ -46,16 +41,6 @@ export const DEFAULT_ITEMS = [
         "name": "Tailwind",
         "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
         "tone": "framework"
-      },
-      {
-        "name": "PostCSS",
-        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postcss/postcss-original.svg",
-        "tone": "tool"
-      },
-      {
-        "name": "ESLint",
-        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg",
-        "tone": "tool"
       },
       {
         "name": "Vercel",
@@ -82,19 +67,9 @@ export const DEFAULT_ITEMS = [
     "best": false,
     "tech": [
       {
-        "name": "SQL",
-        "icon": "",
-        "tone": "lang"
-      },
-      {
         "name": "Python",
         "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         "tone": "lang"
-      },
-      {
-        "name": "PyQt",
-        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/qt/qt-original.svg",
-        "tone": "framework"
       },
       {
         "name": "PostgreSQL",
@@ -114,7 +89,23 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Matplotlib",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "NumPy",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
+        "tone": "tool"
+      }
+    ],
     "createdAt": "2026-04-05T07:26:15Z",
     "pushedAt": "2026-04-05T07:26:46Z",
     "private": false
@@ -127,7 +118,13 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "tone": "lang"
+      }
+    ],
     "createdAt": "2026-04-05T06:59:16Z",
     "pushedAt": "2026-04-05T07:04:00Z",
     "private": false
@@ -140,7 +137,38 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Pandas",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Matplotlib",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Polars",
+        "icon": "https://cdn.simpleicons.org/polars/white",
+        "tone": "tool"
+      },
+      {
+        "name": "Docker",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Azure",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+        "tone": "platform"
+      }
+    ],
     "createdAt": "2026-02-04T21:43:05Z",
     "pushedAt": "2026-02-11T00:39:01Z",
     "private": false
@@ -153,7 +181,68 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "JavaScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Next.js",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "React",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Tailwind",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Flask",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Pandas",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Matplotlib",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Docker",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "Azure",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg",
+        "tone": "platform"
+      },
+      {
+        "name": "Firebase",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg",
+        "tone": "data"
+      }
+    ],
     "createdAt": "2026-03-03T07:11:43Z",
     "pushedAt": "2026-04-08T18:40:40Z",
     "private": false
@@ -166,7 +255,13 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "Java",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+        "tone": "lang"
+      }
+    ],
     "createdAt": "2026-02-24T03:30:46Z",
     "pushedAt": "2026-03-07T05:54:29Z",
     "private": false
@@ -179,34 +274,73 @@ export const DEFAULT_ITEMS = [
     "image": null,
     "video": null,
     "best": false,
-    "tech": [],
+    "tech": [
+      {
+        "name": "JavaScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Next.js",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "React",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Tailwind",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Vercel",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+        "tone": "platform"
+      },
+      {
+        "name": "Supabase",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg",
+        "tone": "data"
+      }
+    ],
     "createdAt": "2026-08-17T19:33:19Z",
     "pushedAt": "2026-08-19T04:50:55Z",
     "private": false
   },
   {
-    "name": "portfolio",
-    "desc": "A retro-pixel, single-page Next.js portfolio with a terminal-style start screen. It shows my profile, education, career, tech stack, and projects. The project grid fetches live repo data from GitHub and filters by Newest, Oldest, or Best.",
-    "github": "https://github.com/davidntd/portfolio.git",
-    "live": "https://davidntd-portfolio.vercel.app",
-    "image": null,
-    "video": null,
-    "best": false,
-    "tech": [],
-    "createdAt": "2026-06-14T01:15:02Z",
-    "pushedAt": "2026-08-20T01:38:31Z",
-    "private": false
-  },
-  {
     "name": "brown-bakery-site",
-    "desc": "gabby david and me",
+    "desc": "brown bakery site",
     "github": "https://github.com/CreefordSanchez/brown-bakery-site",
     "live": null,
     "image": null,
     "video": null,
     "createdAt": "2025-01-28T02:58:38Z",
     "pushedAt": "2025-02-17T09:43:12Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "JavaScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "HTML",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+        "tone": "lang"
+      }
+    ],
     "best": false,
     "private": false
   },
@@ -219,72 +353,18 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-01-23T00:44:01Z",
     "pushedAt": "2026-04-21T04:02:46Z",
-    "tech": [],
-    "best": false,
-    "private": true
-  },
-  {
-    "name": "arcwellness-backend",
-    "desc": "A backend application for SAIT capstone project",
-    "github": "https://github.com/falconvn2006/arcwellness-backend",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-02-19T15:27:10Z",
-    "pushedAt": "2026-04-15T18:57:57Z",
-    "tech": [],
-    "best": false,
-    "private": false
-  },
-  {
-    "name": "trainsight",
-    "desc": "AI workout assistant ",
-    "github": "https://github.com/JackGess/trainsight",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-03-09T07:57:25Z",
-    "pushedAt": "2026-04-17T08:45:26Z",
-    "tech": [],
-    "best": false,
-    "private": true
-  },
-  {
-    "name": "trainsight-backend",
-    "desc": "",
-    "github": "https://github.com/falconvn2006/trainsight-backend",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-03-09T23:53:15Z",
-    "pushedAt": "2026-03-30T22:51:50Z",
-    "tech": [],
-    "best": false,
-    "private": false
-  },
-  {
-    "name": "trainsight-ai",
-    "desc": "",
-    "github": "https://github.com/falconvn2006/trainsight-ai",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-03-18T19:12:44Z",
-    "pushedAt": "2026-06-04T17:15:27Z",
-    "tech": [],
-    "best": false,
-    "private": false
-  },
-  {
-    "name": "capstone-testing",
-    "desc": "A separate version of the capstone project that is only used for testing",
-    "github": "https://github.com/falconvn2006/capstone-testing",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-03-24T04:09:33Z",
-    "pushedAt": "2026-04-15T03:37:35Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "JavaScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "React Native",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "tone": "framework"
+      }
+    ],
     "best": false,
     "private": true
   },
@@ -297,22 +377,20 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-03-31T21:05:06Z",
     "pushedAt": "2026-04-17T05:15:59Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "JavaScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "tone": "lang"
+      }
+    ],
     "best": false,
     "private": true
-  },
-  {
-    "name": "arcwellness-admin",
-    "desc": "",
-    "github": "https://github.com/falconvn2006/arcwellness-admin",
-    "live": null,
-    "image": null,
-    "video": null,
-    "createdAt": "2026-04-02T04:20:17Z",
-    "pushedAt": "2026-04-16T04:44:32Z",
-    "tech": [],
-    "best": false,
-    "private": false
   },
   {
     "name": "cursor-hackahon",
@@ -323,7 +401,43 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-05-23T19:43:29Z",
     "pushedAt": "2026-05-29T15:52:12Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "TypeScript",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "CSS",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Python",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "Next.js",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "React",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Tailwind",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "Vercel",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+        "tone": "platform"
+      }
+    ],
     "best": false,
     "private": false
   },
@@ -336,7 +450,28 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-08-14T16:34:02Z",
     "pushedAt": "2026-08-14T16:36:40Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "C++",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "https://cdn.simpleicons.org/platformio",
+        "tone": "platform"
+      },
+      {
+        "name": "Arduino",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "ESP32",
+        "icon": "https://cdn.simpleicons.org/espressif",
+        "tone": "tool"
+      }
+    ],
     "best": false,
     "private": false
   },
@@ -349,7 +484,28 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-08-14T18:53:57Z",
     "pushedAt": "2026-08-14T18:55:21Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "C++",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "https://cdn.simpleicons.org/platformio",
+        "tone": "platform"
+      },
+      {
+        "name": "Arduino",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "ESP32",
+        "icon": "https://cdn.simpleicons.org/espressif",
+        "tone": "tool"
+      }
+    ],
     "best": false,
     "private": false
   },
@@ -362,7 +518,28 @@ export const DEFAULT_ITEMS = [
     "video": "",
     "createdAt": "2026-08-15T01:12:04Z",
     "pushedAt": "2026-08-15T01:13:07Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "C++",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "https://cdn.simpleicons.org/platformio",
+        "tone": "platform"
+      },
+      {
+        "name": "Arduino",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "ESP32",
+        "icon": "https://cdn.simpleicons.org/espressif",
+        "tone": "tool"
+      }
+    ],
     "best": false,
     "private": false
   },
@@ -375,7 +552,28 @@ export const DEFAULT_ITEMS = [
     "video": null,
     "createdAt": "2026-08-15T02:29:07Z",
     "pushedAt": "2026-08-15T02:32:30Z",
-    "tech": [],
+    "tech": [
+      {
+        "name": "C++",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "https://cdn.simpleicons.org/platformio",
+        "tone": "platform"
+      },
+      {
+        "name": "Arduino",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
+        "tone": "framework"
+      },
+      {
+        "name": "ESP32",
+        "icon": "https://cdn.simpleicons.org/espressif",
+        "tone": "tool"
+      }
+    ],
     "best": false,
     "private": false
   }
