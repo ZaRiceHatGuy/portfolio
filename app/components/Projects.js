@@ -511,7 +511,7 @@ export const DEFAULT_ITEMS = [
   },
   {
     "name": "Project-3-Buzzer-with-button",
-    "desc": "",
+    "desc": "A button-controlled buzzer system that demonstrates digital input and output by activating an audible alert when the push button is pressed.",
     "github": "https://github.com/davidntd/Project-3-Buzzer-with-button",
     "live": null,
     "image": null,
@@ -541,15 +541,25 @@ export const DEFAULT_ITEMS = [
       }
     ],
     "best": false,
-    "private": false
+    "private": false,
+    "media": [
+      {
+        "type": "video",
+        "url": "/project/Video.mp4"
+      },
+      {
+        "type": "video",
+        "url": "/project/Tinkercad.mp4"
+      }
+    ]
   },
   {
     "name": "Project-4-LED-with-photoresistor",
-    "desc": "",
+    "desc": "A light-activated LED system that uses a photoresistor (LDR) to detect ambient light and automatically turns the LED on when it becomes dark and off when sufficient light is detected.",
     "github": "https://github.com/davidntd/Project-4-LED-with-photoresistor",
     "live": null,
     "image": null,
-    "video": null,
+    "video": "",
     "createdAt": "2026-08-15T02:29:07Z",
     "pushedAt": "2026-08-15T02:32:30Z",
     "tech": [
@@ -575,15 +585,25 @@ export const DEFAULT_ITEMS = [
       }
     ],
     "best": false,
-    "private": false
+    "private": false,
+    "media": [
+      {
+        "type": "image",
+        "url": "/project/Image.png"
+      },
+      {
+        "type": "image",
+        "url": "/project/Tinkercad.png"
+      }
+    ]
   },
   {
     "name": "Project-5-Multisensor-Device",
-    "desc": "",
+    "desc": "A multisensor monitoring device that continuously measures magnetic fields using a Hall-effect sensor, sound levels, motion using a passive infrared (PIR) sensor, temperature, and relative humidity. The device collects and displays sensor readings in real time and can optionally log the data for analysis.",
     "github": "https://github.com/davidntd/Project-5-Multisensor-Device",
     "live": null,
     "image": null,
-    "video": null,
+    "video": "/project/Video.mp4",
     "media": [],
     "createdAt": "2026-08-21T02:35:01Z",
     "pushedAt": "2026-08-21T02:36:07Z",
@@ -851,8 +871,8 @@ export default function Projects({ items = DEFAULT_ITEMS }) {
                   {!p.private && <ProjectLink href={p.github} title="View Git Repo">GitHub</ProjectLink>}
                   {p.live && <ProjectLink href={p.live} title="View Live Site">Live</ProjectLink>}
                   {p.media.length > 0 && (
-                    <ProjectLink as="button" onClick={() => setMediaGallery({ open: true, items: p.media, index: 0 })} title="Preview Img/VID">
-                      Preview
+                    <ProjectLink as="button" onClick={() => setMediaGallery({ open: true, items: p.media, index: 0 })} title="View Img/Vid">
+                      Media
                     </ProjectLink>
                   )}
                 </div>
