@@ -576,6 +576,41 @@ export const DEFAULT_ITEMS = [
     ],
     "best": false,
     "private": false
+  },
+  {
+    "name": "Project-5-Multisensor-Device",
+    "desc": "",
+    "github": "https://github.com/davidntd/Project-5-Multisensor-Device",
+    "live": null,
+    "image": null,
+    "video": null,
+    "media": [],
+    "createdAt": "2026-08-21T02:35:01Z",
+    "pushedAt": "2026-08-21T02:36:07Z",
+    "tech": [
+      {
+        "name": "C++",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
+        "tone": "lang"
+      },
+      {
+        "name": "PlatformIO",
+        "icon": "https://cdn.simpleicons.org/platformio",
+        "tone": "tool"
+      },
+      {
+        "name": "Arduino",
+        "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/arduino/arduino-original.svg",
+        "tone": "tool"
+      },
+      {
+        "name": "ESP32",
+        "icon": "https://cdn.simpleicons.org/espressif",
+        "tone": "tool"
+      }
+    ],
+    "private": false,
+    "best": false
   }
 ];
 // @sync-end
